@@ -1,0 +1,8 @@
+stages:
+  run_predictions:
+    cmd: python cml_scripts/evaluate_metrics.py
+    deps:
+    - cml_scripts/evaluate_metrics.py
+    metrics:
+    - cml_scripts/metrics.json:
+        cache: false

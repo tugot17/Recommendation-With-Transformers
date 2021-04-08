@@ -4,6 +4,26 @@
 
 DESCRIPTION
 
+## TL;DR
+
+```
+pip install -r app/requirements.txt
+```
+
+```
+dvc pull
+```
+
+```
+dvc repro
+```
+
+```
+jupyter notebook
+```
+
+more details below
+
 ## How to obtain the dataset
 
 The dataset used in this project comes from [...]()

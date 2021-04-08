@@ -1,0 +1,12 @@
+schema: '2.0'
+stages:
+  run_predictions:
+    cmd: python cml_scripts/evaluate_metrics.py
+    deps:
+    - path: cml_scripts/evaluate_metrics.py
+      md5: f660515dd4001292b5b8e94d920030f8
+      size: 230
+    outs:
+    - path: cml_scripts/metrics.json
+      md5: 20c353dd497c21991f9954e572203874
+      size: 18
