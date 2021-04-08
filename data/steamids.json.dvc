@@ -1,0 +1,4 @@
+outs:
+- md5: 4275c2c17787211b95c49084df2f2368
+  size: 219398520
+  path: steamids.json

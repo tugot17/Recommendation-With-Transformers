@@ -1,30 +1,54 @@
 [![GitHub last commit](https://img.shields.io/github/last-commit/tugot17/Data-Science-Project-Template)](https://github.com/tugot17/Data-Science-Project-Template/)
 
-# Data-Science-Project-Template
-Universal template for your datascience project. 
+# Transformers for recommendation systems
 
-As a backbone we use [scipy-notebook](https://hub.docker.com/r/jupyter/scipy-notebook) image, which probably aready contains the data-science package that you are interested in. 
+DESCRIPTION
+
+## How to obtain the dataset
+
+The dataset used in this project comes from [...]()
+
+It was prefiltered to reduce its size (...)
+
+Currently the dataset consist of the following files:
+
+* data.csv.gz - DESCRIPTION
+* steamids.json - DESCRIPTION
+* appids.json - DESCRIPTION
+
+All of them are stored in the [data](data) directory
+
+The simples way to get it is to use the DVC, just run 
+
+```
+dvc pull
+```
+
+If you need to pull just one of this files run
+
+```
+dvc pull -d data/name_of_your_file
+```
 
 ## How to run it
 
-Just run
+
+and install [requirements.txt](app/requirements.txt)
 
 ```
-docker-compose up
-```
-Then copy token from console and run `localhost:8001` with the copied token to access notebooks
-
-
-If u want to execute something on python scripts level you can access the container by running
-
-```
-docker exec -it data-science-project bash
+pip install -r app/requirements.txt
 ```
 
-where `data-science-project` is the contrainer name
+
+## Continuous machine learning
+
 
 ## Authors
+
+* [Kemal Erdem](https://github.com/burnpiro)
 * [Piotr Mazurek](https://github.com/tugot17)
+* [Marek Pokropiński](https://github.com/MarekPokropinski)
+* [Daria Puchalska](https://github.com/d4ria)
 
 ## License
 
