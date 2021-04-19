@@ -1,5 +1,18 @@
 schema: '2.0'
 stages:
+  unzip_dataset:
+    cmd: python cml_scripts/unzip_dataset.py
+    deps:
+    - path: cml_scripts/unzip_dataset.py
+      md5: bd690f26357f364b287e721dd7f50662
+      size: 386
+    - path: data/data.csv.gz
+      md5: b44d756899b65b1f2423aa038f741e49
+      size: 996189061
+    outs:
+    - path: data/data.csv
+      md5: 6fc6a8d885bdc64c692448be3596da79
+      size: 4780037277
   run_predictions:
     cmd: python cml_scripts/evaluate_metrics.py
     deps:
