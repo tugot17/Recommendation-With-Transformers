@@ -1,4 +1,11 @@
 stages:
+  unzip_dataset:
+    cmd: python cml_scripts/unzip_dataset.py
+    deps:
+      - cml_scripts/unzip_dataset.py
+      - data/data.csv.gz
+    outs:
+      - data/data.csv
   run_predictions:
     cmd: python cml_scripts/evaluate_metrics.py
     deps:
