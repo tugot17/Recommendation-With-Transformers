@@ -65,9 +65,6 @@ export default function GameDetailsDialog({ game = {} }) {
     setOpen(game.appid != null);
   }, [game]);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
   const handleClose = () => {
     setOpen(false);
   };
