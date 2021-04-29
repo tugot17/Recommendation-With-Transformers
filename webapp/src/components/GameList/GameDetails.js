@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import {makeStyles, withStyles} from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
@@ -21,6 +21,9 @@ const styles = (theme) => ({
     top: theme.spacing(1),
     color: theme.palette.grey[500],
   },
+  iframe: {
+    transform: 'translate(25%, 25%) scale(1.5)'
+  }
 });
 
 const DialogTitle = withStyles(styles)((props) => {
@@ -44,6 +47,8 @@ const DialogTitle = withStyles(styles)((props) => {
 const DialogContent = withStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
+    width: 646 * 1.55,
+    height: 190 * 1.6
   },
 }))(MuiDialogContent);
 
@@ -54,36 +59,35 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 
-export default function GameDetailsDialog({ game = {} }) {
-  const [open, setOpen] = useState(false);
+const useStyles = makeStyles(styles)
 
-  const { status, data, error } = useFetch(
-    `https://store.steampowered.com/api/appdetails?appids=${game.appid || 217920}&key=546BFB646C593E45E6A294F26BF60C07`
-  );
+export default function GameDetailsDialog({ game = {}, onClose = () => {} }) {
+  const classes = useStyles();
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     setOpen(game.appid != null);
   }, [game]);
 
   const handleClose = () => {
-    setOpen(false);
+    onClose({})
   };
 
-  console.log(status, data, error);
   return (
     <Dialog
       onClose={handleClose}
       aria-labelledby="customized-dialog-title"
+      maxWidth={"lg"}
       open={open}
     >
       <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-        {data.name}
+        {game != null ? game.Title : ''}
       </DialogTitle>
       <DialogContent dividers>
-        <Typography gutterBottom>{data.detailed_description}</Typography>
+        <iframe className={classes.iframe} width="646" height="190" frameborder="0"  src={`https://store.steampowered.com/widget/${game.appid}`}/>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={handleClose} color="primary">
+        <Button autoFocus onClick={handleClose} color="secondary">
           Close
         </Button>
       </DialogActions>

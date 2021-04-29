@@ -54,7 +54,7 @@ export default function GameList({ gameData }) {
   const [selectedGame, setSelectedGame] = useState({});
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} id="main-grid">
       <GridList
         cellHeight={240}
         className={classes.gridList}
@@ -94,7 +94,7 @@ export default function GameList({ gameData }) {
                 <IconButton
                   aria-label={`info about ${game.Title}`}
                   className={classes.icon}
-                  onClick={() => setSelectedGame(game.appid)}
+                  onClick={() => setSelectedGame(game)}
                 >
                   <InfoIcon />
                 </IconButton>
@@ -103,7 +103,7 @@ export default function GameList({ gameData }) {
           </GridListTile>
         ))}
       </GridList>
-      <GameDetailsDialog game={selectedGame} />
+      <GameDetailsDialog game={selectedGame} onClose={setSelectedGame}/>
     </div>
   );
 }
