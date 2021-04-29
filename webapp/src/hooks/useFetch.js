@@ -40,7 +40,7 @@ const useFetch = (url) => {
       } else {
         try {
           const response = await fetch(url, {
-            mode: 'no-cors', // no-cors, *cors, same-origin
+            mode: 'cors', // no-cors, *cors, same-origin
           });
           const data = await response.json();
           cache.current[url] = data;
