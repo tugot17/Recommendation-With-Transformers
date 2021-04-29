@@ -69,7 +69,7 @@ export default function GameDetailsDialog({ game = {} }) {
     setOpen(false);
   };
 
-  console.log(status, error);
+  console.log(status, data, error);
   return (
     <Dialog
       onClose={handleClose}
