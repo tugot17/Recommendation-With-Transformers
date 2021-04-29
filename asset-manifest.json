@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/Recommendation-With-Transformers/static/css/main.6dea0f05.chunk.css",
-    "main.js": "/Recommendation-With-Transformers/static/js/main.771c1910.chunk.js",
-    "main.js.map": "/Recommendation-With-Transformers/static/js/main.771c1910.chunk.js.map",
-    "runtime-main.js": "/Recommendation-With-Transformers/static/js/runtime-main.dc888656.js",
-    "runtime-main.js.map": "/Recommendation-With-Transformers/static/js/runtime-main.dc888656.js.map",
-    "static/js/2.eb7cc870.chunk.js": "/Recommendation-With-Transformers/static/js/2.eb7cc870.chunk.js",
-    "static/js/2.eb7cc870.chunk.js.map": "/Recommendation-With-Transformers/static/js/2.eb7cc870.chunk.js.map",
-    "static/js/3.74a84cdf.chunk.js": "/Recommendation-With-Transformers/static/js/3.74a84cdf.chunk.js",
-    "static/js/3.74a84cdf.chunk.js.map": "/Recommendation-With-Transformers/static/js/3.74a84cdf.chunk.js.map",
+    "main.js": "/Recommendation-With-Transformers/static/js/main.ad119b17.chunk.js",
+    "main.js.map": "/Recommendation-With-Transformers/static/js/main.ad119b17.chunk.js.map",
+    "runtime-main.js": "/Recommendation-With-Transformers/static/js/runtime-main.40ced3c5.js",
+    "runtime-main.js.map": "/Recommendation-With-Transformers/static/js/runtime-main.40ced3c5.js.map",
+    "static/js/2.75f8009a.chunk.js": "/Recommendation-With-Transformers/static/js/2.75f8009a.chunk.js",
+    "static/js/2.75f8009a.chunk.js.map": "/Recommendation-With-Transformers/static/js/2.75f8009a.chunk.js.map",
+    "static/js/3.de44ce28.chunk.js": "/Recommendation-With-Transformers/static/js/3.de44ce28.chunk.js",
+    "static/js/3.de44ce28.chunk.js.map": "/Recommendation-With-Transformers/static/js/3.de44ce28.chunk.js.map",
     "index.html": "/Recommendation-With-Transformers/index.html",
     "static/css/main.6dea0f05.chunk.css.map": "/Recommendation-With-Transformers/static/css/main.6dea0f05.chunk.css.map",
-    "static/js/2.eb7cc870.chunk.js.LICENSE.txt": "/Recommendation-With-Transformers/static/js/2.eb7cc870.chunk.js.LICENSE.txt"
+    "static/js/2.75f8009a.chunk.js.LICENSE.txt": "/Recommendation-With-Transformers/static/js/2.75f8009a.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.dc888656.js",
-    "static/js/2.eb7cc870.chunk.js",
+    "static/js/runtime-main.40ced3c5.js",
+    "static/js/2.75f8009a.chunk.js",
     "static/css/main.6dea0f05.chunk.css",
-    "static/js/main.771c1910.chunk.js"
+    "static/js/main.ad119b17.chunk.js"
   ]
 }
