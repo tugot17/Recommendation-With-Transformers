@@ -41,6 +41,12 @@ const useFetch = (url) => {
         try {
           const response = await fetch(url, {
             mode: 'cors', // no-cors, *cors, same-origin
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+              // 'Content-Type': 'application/x-www-form-urlencoded',
+            },
           });
           const data = await response.json();
           cache.current[url] = data;
