@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import {makeStyles, withStyles} from "@material-ui/core/styles";
+import React, { useEffect, useState } from "react";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
@@ -8,7 +8,7 @@ import MuiDialogActions from "@material-ui/core/DialogActions";
 import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
-import { useFetch } from "../../hooks/useFetch";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
 
 const styles = (theme) => ({
   root: {
@@ -22,7 +22,10 @@ const styles = (theme) => ({
     color: theme.palette.grey[500],
   },
   iframe: {
-    transform: 'translate(25%, 25%) scale(1.5)'
+    transform: "translate(25%, 25%) scale(1.5)",
+  },
+  title: {
+    color: '#fff'
   }
 });
 
@@ -48,7 +51,7 @@ const DialogContent = withStyles((theme) => ({
   root: {
     padding: theme.spacing(2),
     width: 646 * 1.55,
-    height: 190 * 1.6
+    height: 190 * 1.6,
   },
 }))(MuiDialogContent);
 
@@ -59,7 +62,7 @@ const DialogActions = withStyles((theme) => ({
   },
 }))(MuiDialogActions);
 
-const useStyles = makeStyles(styles)
+const useStyles = makeStyles(styles);
 
 export default function GameDetailsDialog({ game = {}, onClose = () => {} }) {
   const classes = useStyles();
@@ -70,27 +73,49 @@ export default function GameDetailsDialog({ game = {}, onClose = () => {} }) {
   }, [game]);
 
   const handleClose = () => {
-    onClose({})
+    onClose({});
   };
 
   return (
-    <Dialog
-      onClose={handleClose}
-      aria-labelledby="customized-dialog-title"
-      maxWidth={"lg"}
-      open={open}
-    >
-      <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-        {game != null ? game.Title : ''}
-      </DialogTitle>
-      <DialogContent dividers>
-        <iframe className={classes.iframe} width="646" height="190" frameborder="0"  src={`https://store.steampowered.com/widget/${game.appid}`}/>
-      </DialogContent>
-      <DialogActions>
-        <Button autoFocus onClick={handleClose} color="secondary">
-          Close
-        </Button>
-      </DialogActions>
-    </Dialog>
+    game.appid != null && (
+      <Dialog
+        onClose={handleClose}
+        aria-labelledby="customized-dialog-title"
+        maxWidth={"lg"}
+        open={open}
+        PaperProps={{
+          style: {
+            backgroundImage: `url('https://cdn.akamai.steamstatic.com/steam/apps/${game.appid}/page_bg_generated_v6b.jpg')`,
+          },
+        }}
+      >
+        <DialogTitle id="customized-dialog-title" onClose={handleClose}>
+          <span className={classes.title}>{game.Title}</span>
+        </DialogTitle>
+        <DialogContent dividers>
+          <iframe
+            title={game.Title}
+            className={classes.iframe}
+            width="646"
+            height="190"
+            frameBorder="0"
+            src={`https://store.steampowered.com/widget/${game.appid}`}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button
+            startIcon={<StarBorderIcon />}
+            onClick={handleClose}
+            color="secondary"
+            variant="outlined"
+          >
+            Add to my list
+          </Button>
+          <Button autoFocus onClick={handleClose}>
+            <span className={classes.title}>Close</span>
+          </Button>
+        </DialogActions>
+      </Dialog>
+    )
   );
 }

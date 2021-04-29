@@ -1,11 +1,11 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
-import StarBorderIcon from '@material-ui/icons/StarBorder';
+import StarBorderIcon from "@material-ui/icons/StarBorder";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import GameDetailsDialog from "./GameDetails";
 
@@ -27,28 +27,11 @@ const useStyles = makeStyles((theme) => ({
   },
   topTitleBar: {
     background:
-      'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
-      'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+      "linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, " +
+      "rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)",
   },
 }));
 
-/**
- * The example data is structured as follows:
- *
- * import image from 'path/to/image.jpg';
- * [etc...]
- *
- * const tileData = [
- *   {
- *     appid: image,
- *     title: 'Image',
- *     author: 'author',
- *   },
- *   {
- *     [etc...]
- *   },
- * ];
- */
 export default function GameList({ gameData }) {
   const classes = useStyles();
   const [selectedGame, setSelectedGame] = useState({});
@@ -72,7 +55,10 @@ export default function GameList({ gameData }) {
             <GridListTileBar
               titlePosition="top"
               actionIcon={
-                <IconButton aria-label={`star ${game.Title}`} className={classes.icon}>
+                <IconButton
+                  aria-label={`star ${game.Title}`}
+                  className={classes.icon}
+                >
                   <StarBorderIcon />
                 </IconButton>
               }
@@ -83,11 +69,10 @@ export default function GameList({ gameData }) {
               title={game.Title}
               subtitle={
                 <span>
-                  Released:{" "}
                   {game.Release_Date.substring(0, 4) === "1970"
-                    ? "Unknown"
-                    : game.Release_Date.substring(0, 4)}
-                  , Price: {game.Price === "0" ? "Free" : `${game.Price}$`}
+                    ? ""
+                    : `Released: ${game.Release_Date.substring(0, 4)}, `}
+                  {game.Price === "0" ? "" : `Price: ${game.Price}$`}
                 </span>
               }
               actionIcon={
@@ -103,7 +88,7 @@ export default function GameList({ gameData }) {
           </GridListTile>
         ))}
       </GridList>
-      <GameDetailsDialog game={selectedGame} onClose={setSelectedGame}/>
+      <GameDetailsDialog game={selectedGame} onClose={setSelectedGame} />
     </div>
   );
 }
