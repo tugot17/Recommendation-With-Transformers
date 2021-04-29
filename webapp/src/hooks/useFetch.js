@@ -39,7 +39,9 @@ const useFetch = (url) => {
         dispatch({ type: ACTIONS.FETCHED, payload: data });
       } else {
         try {
-          const response = await fetch(url);
+          const response = await fetch(url, {
+            mode: 'no-cors', // no-cors, *cors, same-origin
+          });
           const data = await response.json();
           cache.current[url] = data;
           if (cancelRequest) return;

@@ -20,7 +20,7 @@ function App() {
   const [games, setGames] = useState([])
 
   useEffect(() => {
-    Papa.parse("/app_id_info.csv", {
+    Papa.parse("Recommendation-With-Transformers/app_id_info.csv", {
       download: true,
       header: true,
       skipEmptyLines: true,
