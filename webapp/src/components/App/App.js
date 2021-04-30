@@ -9,9 +9,7 @@ import { menuElements } from "../../config";
 import UserList from "../UserList/UserList";
 import { store } from "../../hooks/store";
 import Profile from "../Profile/Profile";
-import IconButton from "@material-ui/core/IconButton";
 import UserUpdate from "../Layout/UserUpdate";
-import Toolbar from "@material-ui/core/Toolbar";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,7 +33,6 @@ function App() {
       header: true,
       skipEmptyLines: true,
       complete: function (results) {
-        console.log(results);
         setGames(results.data);
       },
     });

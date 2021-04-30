@@ -17,7 +17,6 @@ import Badge from "@material-ui/core/Badge";
 import MenuIcon from "@material-ui/icons/Menu";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import PersonIcon from "@material-ui/icons/Person";
-import { FirestoreMutation }from '@react-firebase/firestore'
 import { orange, deepOrange, purple, blue } from "@material-ui/core/colors";
 
 // For Switch Theming
@@ -30,7 +29,6 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import ListItemText from "@material-ui/core/ListItemText";
 import PeopleIcon from "@material-ui/icons/People";
 import BarChartIcon from "@material-ui/icons/BarChart";
-import UserUpdate from "./UserUpdate";
 
 function Copyright() {
   return (
