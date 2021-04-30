@@ -27,6 +27,7 @@ const StateProvider = ({ children }) => {
     games: [],
     userId: uuidv4(),
     name: "",
+    color: "#7b1fa2",
     created: new Date().toLocaleDateString("en-GB", {
       weekday: "long",
       year: "numeric",
