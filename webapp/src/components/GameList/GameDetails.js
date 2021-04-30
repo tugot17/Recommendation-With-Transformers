@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { makeStyles, withStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
@@ -9,6 +9,8 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
+import StarIcon from "@material-ui/icons/Star";
+import {store} from "../../hooks/store";
 
 const styles = (theme) => ({
   root: {
@@ -64,8 +66,9 @@ const DialogActions = withStyles((theme) => ({
 
 const useStyles = makeStyles(styles);
 
-export default function GameDetailsDialog({ game = {}, onClose = () => {} }) {
+export default function GameDetailsDialog({ game = {}, onClose = () => {}, onSelect = () => {} }) {
   const classes = useStyles();
+  const { state } = useContext(store);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -75,6 +78,10 @@ export default function GameDetailsDialog({ game = {}, onClose = () => {} }) {
   const handleClose = () => {
     onClose({});
   };
+
+  const handleSelect = () => {
+    onSelect(game.appid);
+  }
 
   return (
     game.appid != null && (
@@ -104,12 +111,12 @@ export default function GameDetailsDialog({ game = {}, onClose = () => {} }) {
         </DialogContent>
         <DialogActions>
           <Button
-            startIcon={<StarBorderIcon />}
-            onClick={handleClose}
+            startIcon={state.user.games.includes(game.appid) ? <StarIcon /> : <StarBorderIcon />}
+            onClick={handleSelect}
             color="secondary"
             variant="outlined"
           >
-            Add to my list
+            {state.user.games.includes(game.appid) ? 'Remove from my list' : 'Add to my list'}
           </Button>
           <Button autoFocus onClick={handleClose}>
             <span className={classes.title}>Close</span>

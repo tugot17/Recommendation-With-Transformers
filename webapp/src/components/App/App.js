@@ -1,7 +1,13 @@
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import Papa from 'papaparse';
+import firebase from "firebase";
+import { FirestoreProvider } from "@react-firebase/firestore";
+import {config} from "../../config";
 import GameList from "../GameList/GameList";
 import {makeStyles} from "@material-ui/core/styles";
+import {menuElements} from "../../config";
+import UserList from "../UserList/UserList";
+import {store} from "../../hooks/store";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -17,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 function App() {
   const classes = useStyles();
+  const { state } = useContext(store);
   const [games, setGames] = useState([])
 
   useEffect(() => {
@@ -31,9 +38,12 @@ function App() {
     });
   }, [])
   return (
-    <div className={classes.root}>
-      <GameList gameData={games.slice(0, 20)} />
-    </div>
+    <FirestoreProvider {...config} firebase={firebase}>
+      <div className={classes.root}>
+        { state.menu === menuElements.APPS && <GameList gameData={games} />}
+        { state.menu === menuElements.USERS && <UserList gameData={games} />}
+      </div>
+    </FirestoreProvider>
   );
 }
 
