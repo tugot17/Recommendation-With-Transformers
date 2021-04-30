@@ -45,7 +45,6 @@ export default function UserDetails({user, games}) {
   const [expanded, setExpanded] = useState(['games']);
 
   const handleChange = (panel) => (event, isExpanded) => {
-    console.log(panel, expanded)
     setExpanded(isExpanded ? [...expanded, panel] : expanded.filter(el => el !== panel));
   };
 
@@ -53,7 +52,7 @@ export default function UserDetails({user, games}) {
     <Card className={classes.root}>
       <CardHeader
         avatar={
-          <Avatar aria-label="recipe" className={classes.avatar}>
+          <Avatar aria-label="recipe" className={classes.avatar} style={{backgroundColor: user.color}}>
             {user.name ? user.name.substring(0,1) : user.userId}
           </Avatar>
         }
@@ -67,7 +66,7 @@ export default function UserDetails({user, games}) {
       />
       <Accordion expanded={expanded.includes('games')} onChange={handleChange('games')}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
+          expandIcon={<ExpandMoreIcon color={"secondary"} fontSize="large" />}
           aria-controls="panel-games-content"
           id="panel-games-header"
         >
@@ -79,7 +78,7 @@ export default function UserDetails({user, games}) {
       </Accordion>
       <Accordion expanded={expanded.includes('recommendations')} onChange={handleChange('recommendations')}>
         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
+          expandIcon={<ExpandMoreIcon color={"secondary"} fontSize="large" />}
           aria-controls="panel-recommendations-content"
           id="panel-recommendations-header"
         >

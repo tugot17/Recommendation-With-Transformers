@@ -40,7 +40,7 @@ function App() {
   return (
     <FirestoreProvider {...config} firebase={firebase}>
       <div className={classes.root}>
-        {state.menu === menuElements.APPS && <GameList gameData={games} />}
+        {state.menu === menuElements.APPS && <GameList gameData={games} showSearch={true} />}
         {state.menu === menuElements.USERS && <UserList gameData={games} />}
         {state.menu === menuElements.PROFILE && <Profile gameData={games} />}
       </div>

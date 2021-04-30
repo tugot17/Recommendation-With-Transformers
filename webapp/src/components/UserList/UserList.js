@@ -58,13 +58,13 @@ export default function UserList({ gameData }) {
           elevation={3}
         >
           <List dense className={classes.list}>
-            <FirestoreCollection path="/users/" limit={1}>
+            <FirestoreCollection path="/users/">
               {(d) => {
                 if (d.value == null) {
                   return <CircularProgress color="secondary" />;
                 }
                 return d.value.map((user) => {
-                  const { userId, name, games } = user;
+                  const { userId, name, games, color } = user;
                   const labelId = `checkbox-list-secondary-label-${userId}`;
 
                   return (
@@ -76,7 +76,7 @@ export default function UserList({ gameData }) {
                         selected={selectedUser != null && selectedUser.userId === userId}
                       >
                         <ListItemAvatar>
-                          <FaceIcon className={classes.avatar} />
+                          <FaceIcon className={classes.avatar} style={{color: color}}/>
                         </ListItemAvatar>
                         <ListItemText
                           id={labelId}
