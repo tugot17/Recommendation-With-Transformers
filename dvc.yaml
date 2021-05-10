@@ -1,4 +1,11 @@
 stages:
+  prepare_dataset:
+    cmd: python cml_scripts/prepare_dataset.py
+    deps:
+      - cml_scripts/prepare_dataset.py
+      - data/data.csv.gz
+    outs:
+      - data/sequences.pickle
   run_predictions:
     cmd: python cml_scripts/evaluate_metrics.py
     deps:
