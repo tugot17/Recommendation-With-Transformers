@@ -30,8 +30,3 @@ class SteamDataloader(LightningDataModule):
             self.val_set, batch_size=self.batch_size,
             shuffle=False, num_workers=self.num_workers
         )
-
-
-if __name__ == "__main__":
-    dl = SteamDataloader('../../data/sequences.pickle', 8, 0)
-    print('loaded')
