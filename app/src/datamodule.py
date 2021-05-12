@@ -1,6 +1,8 @@
 from pytorch_lightning import LightningDataModule
 from torch.utils.data import DataLoader
-from .dataset import SteamDataset
+import pickle
+
+from app.src.dataset import SteamDataset
 
 
 class SteamDataloader(LightningDataModule):
@@ -11,10 +13,11 @@ class SteamDataloader(LightningDataModule):
         self.num_workers = num_workers
 
     def setup(self, stage=None):
-        dataset = SteamDataset(self.data_path)
-        train_size = int(0.9 * len(dataset))
-        self.train_set = dataset[:train_size]
-        self.val_set = dataset[train_size:]
+        with open(self.data_path, 'rb') as f:
+            sequences = pickle.load(f)
+        train_size = int(0.9 * len(sequences))
+        self.train_set = SteamDataset(sequences[:train_size])
+        self.val_set = SteamDataset(sequences[train_size:])
 
     def train_dataloader(self):
         return DataLoader(
@@ -27,3 +30,8 @@ class SteamDataloader(LightningDataModule):
             self.val_set, batch_size=self.batch_size,
             shuffle=False, num_workers=self.num_workers
         )
+
+
+if __name__ == "__main__":
+    dl = SteamDataloader('../../data/sequences.pickle', 8, 0)
+    print('loaded')
