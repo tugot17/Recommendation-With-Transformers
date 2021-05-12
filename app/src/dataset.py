@@ -7,12 +7,12 @@ from app.src import NUM_GAMES, MAXLEN, PAD_TOKEN, CLS_TOKEN
 
 class SteamDataset(Dataset):
 
-    def __init__(self, sequences):
+    def __init__(self, sequences, lower_bound=0.5, upper_bound=0.8):
         self.sequences = sequences
         num_sequences = len(sequences)
         splits = []
         for i, seq in enumerate(sequences):
-            split = int(len(seq) * random.uniform(0.5, 0.8))
+            split = int(len(seq) * random.uniform(lower_bound, upper_bound))
             if split > MAXLEN:
                 split = MAXLEN
             splits.append(split)
@@ -36,7 +36,7 @@ class SteamDataset(Dataset):
         self.negative = torch.tensor(negative).cuda()
 
     def __getitem__(self, idx):
-        return self.data[idx, :], self.positive[idx, :], self.negative[idx, :]
+        return self.data[idx], self.positive[idx], self.negative[idx]
 
     def __len__(self):
         return len(self.sequences)

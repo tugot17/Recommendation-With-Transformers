@@ -5,10 +5,7 @@ import torch
 
 from app.src import NUM_GAMES, MAXLEN, PAD_TOKEN, MASK_TOKEN, CLS_TOKEN
 
-
 HIDDEN_SIZE = 256
-BATCH_SIZE = 200
-
 
 bert_config = BertConfig(
     vocab_size=NUM_GAMES+3,
