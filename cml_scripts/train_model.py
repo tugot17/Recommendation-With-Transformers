@@ -21,7 +21,7 @@ if __name__ == "__main__":
 
     # Define model
     seed_everything(42, workers=True)
-    model = TransformerModel(bert_config).cuda()
+    model = TransformerModel(bert_config)
     trainer = Trainer(
         default_root_dir=CHECKPOINTS_DIR,
         max_epochs=40,
@@ -32,4 +32,5 @@ if __name__ == "__main__":
     )
 
     # Train model
+    print('Training...')
     trainer.fit(model, dm)

@@ -26,14 +26,14 @@ class SteamDataset(Dataset):
             random.shuffle(seq)
             split = splits[i]
 
-            data[i, 1:1 + split] = seq[:split]
+            data[i, 1:1 + split] = torch.tensor(seq[:split], dtype=torch.int64)
             data[i, 1 + split:] = PAD_TOKEN
             positive[i, seq[split:]] = True
             negative[i, seq] = False
 
-        self.data = torch.tensor(data).cuda()
-        self.positive = torch.tensor(positive).cuda()
-        self.negative = torch.tensor(negative).cuda()
+        self.data = data
+        self.positive = positive
+        self.negative = negative
 
     def __getitem__(self, idx):
         return self.data[idx], self.positive[idx], self.negative[idx]

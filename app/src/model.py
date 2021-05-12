@@ -37,7 +37,7 @@ class TransformerModel(pl.LightningModule):
         self.dense = torch.nn.Linear(HIDDEN_SIZE, NUM_GAMES)
 
     def forward(self, x, position_ids=None):
-        embedding = self.bert_model(x, position_ids=position_ids).pooler_output
+        embedding = self.model(x, position_ids=position_ids).pooler_output
         return self.dense(embedding)
 
     def configure_optimizers(self):
