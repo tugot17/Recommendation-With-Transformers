@@ -9,7 +9,7 @@ from app.src.datamodule import SteamDataloader
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA_DIR = os.path.join(REPO_ROOT, "data")
 SEQUENCES_PATH = os.path.join(DATA_DIR, "sequences.pickle")
-CHECKPOINTS_DIR = os.path.join(REPO_ROOT, "checkpoints")
+CHECKPOINTS_DIR = os.path.join(REPO_ROOT, "model_checkpoints")
 BATCH_SIZE = 200
 NUM_WORKERS = 4
 TRAIN_RATIO = 0.9
@@ -20,7 +20,7 @@ if __name__ == "__main__":
     dm = SteamDataloader(SEQUENCES_PATH, TRAIN_RATIO, BATCH_SIZE, NUM_WORKERS)
 
     # Define model
-    seed_everything(42, workers=True)
+    seed_everything(42)
     model = TransformerModel(bert_config)
     trainer = Trainer(
         default_root_dir=CHECKPOINTS_DIR,
