@@ -12,7 +12,7 @@ stages:
       - app/src/
       - data/sequences.pickle
     outs:
-      - checkpoints/
+      - model_checkpoints/
   run_predictions:
     cmd: python cml_scripts/evaluate_metrics.py
     deps:
