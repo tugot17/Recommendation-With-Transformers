@@ -24,7 +24,7 @@ def loss_fcn(x, positive, negative, output):
         x_ij = (pos.unsqueeze(-1) - neg)
         bpr_loss += -torch.log(torch.sigmoid(x_ij)).sum()
     bpr_loss = bpr_loss / x.shape[0]
-    return bpr_loss.item()
+    return bpr_loss
 
 
 class TransformerModel(pl.LightningModule):
@@ -49,7 +49,7 @@ class TransformerModel(pl.LightningModule):
         output = self.forward(x, position_ids=torch.zeros_like(x))
         loss = loss_fcn(x, positive, negative, output)
 
-        self.log("train/loss", loss)
+        self.log("train/loss", loss.item())
         return loss
 
     def validation_step(self, batch, batch_idx):
@@ -57,5 +57,5 @@ class TransformerModel(pl.LightningModule):
         output = self.forward(x, position_ids=torch.zeros_like(x))
         loss = loss_fcn(x, positive, negative, output)
 
-        self.log("val/loss", loss)
+        self.log("val/loss", loss.item())
         return loss

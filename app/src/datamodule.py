@@ -1,8 +1,16 @@
 from pytorch_lightning import LightningDataModule
 from torch.utils.data import DataLoader
+from torch.nn.utils.rnn import pad_sequence
+
 import pickle
 
 from app.src.dataset import SteamDataset
+from app.src import PAD_TOKEN
+
+
+def apply_padding(data):
+    seqs, positive, negative = zip(*data)
+    return pad_sequence(seqs, batch_first=True, padding_value=PAD_TOKEN), positive, negative
 
 
 class SteamDataloader(LightningDataModule):
@@ -18,17 +26,22 @@ class SteamDataloader(LightningDataModule):
         with open(self.data_path, 'rb') as f:
             sequences = pickle.load(f)
         train_size = int(self.train_ratio * len(sequences))
-        self.train_set = SteamDataset(sequences[:train_size])
-        self.val_set = SteamDataset(sequences[train_size:])
+        train_sequences = sequences[:train_size]
+        val_sequences = sequences[train_size:]
+        del sequences
+        self.train_set = SteamDataset(train_sequences)
+        self.val_set = SteamDataset(val_sequences)
 
     def train_dataloader(self):
         return DataLoader(
             self.train_set, batch_size=self.batch_size,
-            shuffle=True, num_workers=self.num_workers
+            shuffle=True, num_workers=self.num_workers,
+            collate_fn=apply_padding
         )
 
     def val_dataloader(self):
         return DataLoader(
             self.val_set, batch_size=self.batch_size,
-            shuffle=False, num_workers=self.num_workers
+            shuffle=False, num_workers=self.num_workers,
+            collate_fn=apply_padding
         )

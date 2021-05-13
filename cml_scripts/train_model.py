@@ -11,7 +11,7 @@ DATA_DIR = os.path.join(REPO_ROOT, "data")
 SEQUENCES_PATH = os.path.join(DATA_DIR, "sequences.pickle")
 CHECKPOINTS_DIR = os.path.join(REPO_ROOT, "model_checkpoints")
 BATCH_SIZE = 200
-NUM_WORKERS = 4
+NUM_WORKERS = 1
 TRAIN_RATIO = 0.9
 
 
@@ -28,7 +28,7 @@ if __name__ == "__main__":
         gpus=1,
         deterministic=True,
         accumulate_grad_batches=2,
-        callbacks=[EarlyStopping(monitor="val/loss")]
+        # callbacks=[EarlyStopping(monitor="val/loss")]
     )
 
     # Train model
