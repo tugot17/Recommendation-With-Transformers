@@ -6,7 +6,6 @@ from app.src import NUM_GAMES, MAXLEN, PAD_TOKEN, CLS_TOKEN
 
 
 class SteamDataset(Dataset):
-
     def __init__(self, sequences, lower_bound=0.5, upper_bound=0.8):
         self.sequences = sequences
         num_sequences = len(sequences)
@@ -41,7 +40,7 @@ class SteamDataset(Dataset):
         seq = self.sequences[idx]
         random.shuffle(seq)
         split = int(len(seq) * random.uniform(*self.bounds))
-        if split>MAXLEN:
+        if split > MAXLEN:
             split = MAXLEN
 
         data = [CLS_TOKEN] + seq[:split]

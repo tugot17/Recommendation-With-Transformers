@@ -10,7 +10,7 @@ from app.src import NUM_GAMES, MAXLEN, PAD_TOKEN, MASK_TOKEN, CLS_TOKEN
 HIDDEN_SIZE = 256
 
 bert_config = BertConfig(
-    vocab_size=NUM_GAMES+3,
+    vocab_size=NUM_GAMES + 3,
     hidden_size=HIDDEN_SIZE,
     num_hidden_layers=4,
     num_attention_heads=4,
@@ -23,19 +23,18 @@ def loss_fcn(x, positive, negative, output):
     for i in range(x.shape[0]):
         pos = output[0][positive[0]]
         neg = output[0][negative[0]]
-        x_ij = (pos.unsqueeze(-1) - neg)
+        x_ij = pos.unsqueeze(-1) - neg
         bpr_loss += -torch.log(torch.sigmoid(x_ij)).sum()
     bpr_loss = bpr_loss / x.shape[0]
     return bpr_loss
 
 
 class NDCGMetric(Metric):
-
     def __init__(self, k=20, dist_sync_on_step=False):
         super().__init__(dist_sync_on_step=dist_sync_on_step)
         self.k = k
-        self.add_state("scores", default=torch.tensor(0.), dist_reduce_fx="sum")
-        self.add_state("total", default=torch.tensor(0.), dist_reduce_fx="sum")
+        self.add_state("scores", default=torch.tensor(0.0), dist_reduce_fx="sum")
+        self.add_state("total", default=torch.tensor(0.0), dist_reduce_fx="sum")
 
     def update(self, positive, negative, output):
         true_relevance = positive[negative]
@@ -43,7 +42,7 @@ class NDCGMetric(Metric):
         for i in range(positive.shape[0]):
             score = ndcg_score(true_relevance[i], predicted_relevance[i], k=self.k)
             self.scores += torch.tensor(score)
-            self.total += torch.tensor(1.)
+            self.total += torch.tensor(1.0)
 
     def compute(self):
         return self.scores.float() / self.total

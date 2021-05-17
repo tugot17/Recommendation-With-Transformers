@@ -10,11 +10,14 @@ from app.src import PAD_TOKEN
 
 def apply_padding(data):
     seqs, positive, negative = zip(*data)
-    return pad_sequence(seqs, batch_first=True, padding_value=PAD_TOKEN), positive, negative
+    return (
+        pad_sequence(seqs, batch_first=True, padding_value=PAD_TOKEN),
+        positive,
+        negative,
+    )
 
 
 class SteamDataloader(LightningDataModule):
-
     def __init__(self, data_path, train_ratio, batch_size, num_workers):
         super().__init__()
         self.data_path = data_path
@@ -23,7 +26,7 @@ class SteamDataloader(LightningDataModule):
         self.num_workers = num_workers
 
     def setup(self, stage=None):
-        with open(self.data_path, 'rb') as f:
+        with open(self.data_path, "rb") as f:
             sequences = pickle.load(f)
         train_size = int(self.train_ratio * len(sequences))
         train_sequences = sequences[:train_size]
@@ -34,14 +37,18 @@ class SteamDataloader(LightningDataModule):
 
     def train_dataloader(self):
         return DataLoader(
-            self.train_set, batch_size=self.batch_size,
-            shuffle=True, num_workers=self.num_workers,
-            collate_fn=apply_padding
+            self.train_set,
+            batch_size=self.batch_size,
+            shuffle=True,
+            num_workers=self.num_workers,
+            collate_fn=apply_padding,
         )
 
     def val_dataloader(self):
         return DataLoader(
-            self.val_set, batch_size=self.batch_size,
-            shuffle=False, num_workers=self.num_workers,
-            collate_fn=apply_padding
+            self.val_set,
+            batch_size=self.batch_size,
+            shuffle=False,
+            num_workers=self.num_workers,
+            collate_fn=apply_padding,
         )
