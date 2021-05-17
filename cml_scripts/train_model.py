@@ -1,10 +1,15 @@
 import os
-
+import sys
 from pytorch_lightning import Trainer, seed_everything
 from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 
+from pathlib import Path
+sys.path.append(Path(__file__).parent)
+
 from app.src.model import TransformerModel, bert_config
 from app.src.datamodule import SteamDataloader
+
+
 
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA_DIR = os.path.join(REPO_ROOT, "data")
