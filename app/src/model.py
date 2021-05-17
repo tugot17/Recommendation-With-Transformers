@@ -80,6 +80,7 @@ class TransformerModel(pl.LightningModule):
         loss = loss_fcn(x, positive, negative, output)
 
         self.log("val/loss", loss.item())
-        self.ndcg(positive, negative, output)
-        self.log("val/ndcg", self.ndcg, on_step=True, on_epoch=True)
+        # self.ndcg(positive, negative, output)
+        # self.log("val/ndcg", self.ndcg, on_step=True, on_epoch=True)
+
         return loss

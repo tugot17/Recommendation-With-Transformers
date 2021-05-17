@@ -6,13 +6,21 @@ stages:
       - data/data.csv.gz
     outs:
       - data/sequences.pickle
+
   train_model:
     cmd: PYTHONPATH=. python cml_scripts/train_model.py
     deps:
       - app/src/
       - data/sequences.pickle
+    params:
+      - project_name
+      - dataloader.num_workers
+      - train.epochs
+      - train.batch_size
+      - train.train_size_ratio
     outs:
       - model_checkpoints/
+
   run_predictions:
     cmd: python cml_scripts/evaluate_metrics.py
     deps:
