@@ -10,8 +10,8 @@ REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 DATA_DIR = os.path.join(REPO_ROOT, "data")
 SEQUENCES_PATH = os.path.join(DATA_DIR, "sequences.pickle")
 CHECKPOINTS_DIR = os.path.join(REPO_ROOT, "model_checkpoints")
-BATCH_SIZE = 200
-NUM_WORKERS = 2
+BATCH_SIZE = 128
+NUM_WORKERS = 0
 TRAIN_RATIO = 0.9
 
 
