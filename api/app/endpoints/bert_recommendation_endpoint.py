@@ -19,12 +19,10 @@ def convert_app_id_to_game_id(game_id: int):
 
 
 @router.post("/predict")
-async def predict_best_games_for_user(game_ids: List[int] = Query([[]])) -> List[int]:
+async def predict_best_games_for_user(game_ids: List[int] = Query([])) -> List[int]:
     """
-
-    :param games_list:
-    :param num_games:
-    :return:
+    Json in: [1, 2, 3]
+    Json out: [5, 6, 7]
     """
 
     best_games_for_user = [
