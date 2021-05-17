@@ -7,7 +7,7 @@ stages:
     outs:
       - data/sequences.pickle
   train_model:
-    cmd: python cml_scripts/train_model.py
+    cmd: PYTHONPATH=. python cml_scripts/train_model.py
     deps:
       - app/src/
       - data/sequences.pickle
