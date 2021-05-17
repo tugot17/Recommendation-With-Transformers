@@ -16,15 +16,14 @@ TRAIN_RATIO = 0.9
 
 
 if __name__ == "__main__":
-    # Load data
+    seed_everything(42)
+
     dm = SteamDataloader(SEQUENCES_PATH, TRAIN_RATIO, BATCH_SIZE, NUM_WORKERS)
 
-    # Define model
-    seed_everything(42)
     model = TransformerModel(bert_config)
     trainer = Trainer(
         default_root_dir=CHECKPOINTS_DIR,
-        max_epochs=40,
+        max_epochs=1,
         gpus=1,
         deterministic=True,
         accumulate_grad_batches=2,
@@ -32,5 +31,4 @@ if __name__ == "__main__":
     )
 
     # Train model
-    print('Training...')
     trainer.fit(model, dm)
