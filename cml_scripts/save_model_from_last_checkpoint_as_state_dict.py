@@ -30,7 +30,7 @@ def save_model_from_last_checkpoint_as_state_dict(checkpoints_dir: Path) -> None
     lightning_model.eval()
     lightning_model = lightning_model.cpu()
 
-    torch.save(lightning_model.backbone.state_dict(), params["best_model_save_path"])
+    torch.save(lightning_model.state_dict(), params["best_model_save_path"])
     print("Saved the latest model at:", params["best_model_save_path"])
 
 if __name__ == "__main__":
