@@ -19,12 +19,25 @@ stages:
       - train.batch_size
       - train.train_size_ratio
     outs:
-      - model_checkpoints/
+      - checkpoints/
 
-  run_predictions:
-    cmd: python cml_scripts/evaluate_metrics.py
-    deps:
-    - cml_scripts/evaluate_metrics.py
-    metrics:
-    - cml_scripts/metrics.json:
-        cache: false
+    save_model_from_last_checkpoint_as_state_dict:
+      cmd: PYTHONPATH=. python cml_scripts/save_model_from_last_checkpoint_as_state_dict.py
+      deps:
+        - ${checkpoints_dir}
+      params:
+        - checkpoints_dir
+        - best_model_save_path
+        - dataloader
+        - train.epochs
+      outs:
+        - ${best_model_save_path}
+
+
+#  run_predictions:
+#    cmd: python cml_scripts/evaluate_metrics.py
+#    deps:
+#    - cml_scripts/evaluate_metrics.py
+#    metrics:
+#    - cml_scripts/metrics.json:
+#        cache: false
