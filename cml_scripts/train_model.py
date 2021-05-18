@@ -1,15 +1,13 @@
+from pathlib import Path
+
+# from pytorch_lightning.loggers import WandbLogger
+import yaml
 from pytorch_lightning import Trainer, seed_everything
 from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.callbacks.early_stopping import EarlyStopping
 
-# from pytorch_lightning.loggers import WandbLogger
-import yaml
-
-
-from app.src.model import TransformerModel, bert_config
 from app.src.datamodule import SteamDataloader
-
-from pathlib import Path
+from app.src.model import TransformerModel, bert_config
 
 with open("params.yaml", "r") as fd:
     params = yaml.safe_load(fd)

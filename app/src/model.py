@@ -1,11 +1,11 @@
-from transformers import BertConfig, BertModel
-from torch.optim import Adam
 import pytorch_lightning as pl
-from sklearn.metrics import ndcg_score
-from torchmetrics import Metric
 import torch
+from sklearn.metrics import ndcg_score
+from torch.optim import Adam
+from torchmetrics import Metric
+from transformers import BertConfig, BertModel
 
-from app.src import NUM_GAMES, MAXLEN, PAD_TOKEN, MASK_TOKEN, CLS_TOKEN
+from app.src import CLS_TOKEN, MASK_TOKEN, MAXLEN, NUM_GAMES, PAD_TOKEN
 
 HIDDEN_SIZE = 256
 

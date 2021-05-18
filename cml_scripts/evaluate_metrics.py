@@ -1,5 +1,5 @@
 import json
-from os.path import join, realpath, dirname
+from os.path import dirname, join, realpath
 
 METRICS_PATH = join(dirname(realpath(__file__)), "metrics.json")
 

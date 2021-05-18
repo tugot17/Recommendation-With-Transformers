@@ -1,8 +1,9 @@
-from torch.utils.data import Dataset
-import torch
 import random
 
-from app.src import NUM_GAMES, MAXLEN, PAD_TOKEN, CLS_TOKEN
+import torch
+from torch.utils.data import Dataset
+
+from app.src import CLS_TOKEN, MAXLEN, NUM_GAMES, PAD_TOKEN
 
 
 class SteamDataset(Dataset):

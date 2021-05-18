@@ -3,11 +3,10 @@ from pathlib import Path
 
 import torch
 import yaml
-
-from app.src.model import TransformerModel, bert_config
-from app.src.datamodule import SteamDataloader
-
 from pytorch_lightning import Trainer
+
+from app.src.datamodule import SteamDataloader
+from app.src.model import TransformerModel, bert_config
 
 with open("params.yaml", "r") as fd:
     params = yaml.safe_load(fd)
@@ -25,7 +24,7 @@ SEQUENCES_PATH = DATA_DIR.joinpath("sequences.pickle")
 
 
 def save_model_from_last_checkpoint_as_state_dict(checkpoints_dir: Path) -> None:
-    list_of_checkpoints = checkpoints_dir.glob("/*.ckpt")
+    list_of_checkpoints = checkpoints_dir.glob("*.ckpt")
 
     latest_checkpoint_path = max(list_of_checkpoints, key=lambda p: p.stat().st_ctime)
 
