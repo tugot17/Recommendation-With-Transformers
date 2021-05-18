@@ -7,30 +7,30 @@ stages:
     outs:
       - data/sequences.pickle
 
-  train_model:
-    cmd: PYTHONPATH=. python cml_scripts/train_model.py
-    deps:
-      - cml_scripts/train_model.py
-      - data/sequences.pickle
-    params:
-      - project_name
-      - dataloader.num_workers
-      - train.epochs
-      - train.batch_size
-      - train.train_size_ratio
-    outs:
-      - checkpoints/
-
-  save_model_from_last_checkpoint_as_state_dict:
-    cmd: >-
-      PYTHONPATH=. python
-      cml_scripts/save_model_from_last_checkpoint_as_state_dict.py
-    deps:
-      - '${checkpoints_dir}'
-    params:
-      - checkpoints_dir
-      - best_model_save_path
-      - dataloader
-      - train.epochs
-    outs:
-      - '${best_model_save_path}'
+#  train_model:
+#    cmd: PYTHONPATH=. python cml_scripts/train_model.py
+#    deps:
+#      - cml_scripts/train_model.py
+#      - data/sequences.pickle
+#    params:
+#      - project_name
+#      - dataloader.num_workers
+#      - train.epochs
+#      - train.batch_size
+#      - train.train_size_ratio
+#    outs:
+#      - checkpoints/
+#
+#  save_model_from_last_checkpoint_as_state_dict:
+#    cmd: >-
+#      PYTHONPATH=. python
+#      cml_scripts/save_model_from_last_checkpoint_as_state_dict.py
+#    deps:
+#      - '${checkpoints_dir}'
+#    params:
+#      - checkpoints_dir
+#      - best_model_save_path
+#      - dataloader
+#      - train.epochs
+#    outs:
+#      - '${best_model_save_path}'

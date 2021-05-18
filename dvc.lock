@@ -1,25 +1,15 @@
 schema: '2.0'
 stages:
-  run_predictions:
-    cmd: python cml_scripts/evaluate_metrics.py
-    deps:
-    - path: cml_scripts/evaluate_metrics.py
-      md5: f660515dd4001292b5b8e94d920030f8
-      size: 230
-    outs:
-    - path: cml_scripts/metrics.json
-      md5: 20c353dd497c21991f9954e572203874
-      size: 18
   prepare_dataset:
     cmd: python cml_scripts/prepare_dataset.py
     deps:
     - path: cml_scripts/prepare_dataset.py
-      md5: dad4c1cde97c95a117898cb19977ba30
+      md5: 9c4238918baa3417ce5bfc7cfd346035
       size: 498
     - path: data/data.csv.gz
       md5: b44d756899b65b1f2423aa038f741e49
       size: 996189061
     outs:
     - path: data/sequences.pickle
-      md5: ac93b9b3845ffbaf65eac5d9041626f7
-      size: 783600599
+      md5: 90cb0b7cfd76ceb2732227fe4f5aa1fa
+      size: 812893524
