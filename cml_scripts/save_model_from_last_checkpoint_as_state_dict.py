@@ -12,7 +12,7 @@ from pytorch_lightning import Trainer
 with open("params.yaml", "r") as fd:
     params = yaml.safe_load(fd)
 
-CHECKPOINTS_DIR = Path(params[""])
+CHECKPOINTS_DIR = Path(params["checkpoints_dir"])
 
 BATCH_SIZE = params["train"]["batch_size"]
 TRAIN_SIZE_RATIO = params["train"]["train_size_ratio"]
