@@ -23,6 +23,7 @@ def save_model_from_last_checkpoint_as_state_dict(checkpoints_dir: Path) -> None
     list_of_checkpoints = checkpoints_dir.glob("*.ckpt")
 
     latest_checkpoint_path = max(list_of_checkpoints, key=lambda p: p.stat().st_ctime)
+
     lightning_model = TransformerModel(bert_config)
 
     lightning_model.load_from_checkpoint(latest_checkpoint_path)

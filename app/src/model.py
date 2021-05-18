@@ -53,6 +53,7 @@ class TransformerModel(pl.LightningModule):
 
     def __init__(self, config):
         super().__init__()
+        self.save_hyperparameters()
 
         self.model = BertModel(config)
         self.dense = torch.nn.Linear(HIDDEN_SIZE, NUM_GAMES)
