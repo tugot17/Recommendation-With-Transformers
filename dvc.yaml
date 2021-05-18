@@ -6,7 +6,6 @@ stages:
       - data/data.csv.gz
     outs:
       - data/sequences.pickle
-
   train_model:
     cmd: PYTHONPATH=. python cml_scripts/train_model.py
     deps:
@@ -20,24 +19,16 @@ stages:
       - train.train_size_ratio
     outs:
       - checkpoints/
-
     save_model_from_last_checkpoint_as_state_dict:
-      cmd: PYTHONPATH=. python cml_scripts/save_model_from_last_checkpoint_as_state_dict.py
+      cmd: >-
+        PYTHONPATH=. python
+        cml_scripts/save_model_from_last_checkpoint_as_state_dict.py
       deps:
-        - checkpoints/
+        - '${checkpoints_dir}'
       params:
         - checkpoints_dir
         - best_model_save_path
         - dataloader
         - train.epochs
       outs:
-        - model_state_dicts/bert_model.pth
-
-
-#  run_predictions:
-#    cmd: python cml_scripts/evaluate_metrics.py
-#    deps:
-#    - cml_scripts/evaluate_metrics.py
-#    metrics:
-#    - cml_scripts/metrics.json:
-#        cache: false
+        - '${best_model_save_path}'
