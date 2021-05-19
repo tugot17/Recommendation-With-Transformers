@@ -109,7 +109,7 @@ export default function UserDetails({user, games}) {
             Array.isArray(data) && data.length > 0 && <GameList fixedHeight={false} elPerRow={4} gameData={games.filter(el => data.includes(el.appid))} />
           }
           {
-            status === ACTIONS.FETCH_ERROR && Array.isArray(user.recommendations) && user.recommendations.length > 0 && <GameList fixedHeight={false} elPerRow={8} gameData={games.filter(el => user.recommendations.includes(el.appid))} />
+            status === ACTIONS.FETCH_ERROR && Array.isArray(user.recommendations) && user.recommendations.length > 0 && <GameList fixedHeight={false} elPerRow={4} gameData={games.filter(el => user.recommendations.includes(el.appid))} />
           }
         </AccordionDetails>
       </Accordion>
