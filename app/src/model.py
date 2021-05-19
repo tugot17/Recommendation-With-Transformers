@@ -4,6 +4,7 @@ from sklearn.metrics import ndcg_score
 from torch.optim import Adam
 from torchmetrics import Metric
 from transformers import BertConfig, BertModel
+import numpy as np
 
 from app.src import CLS_TOKEN, MASK_TOKEN, MAXLEN, NUM_GAMES, PAD_TOKEN
 
@@ -21,8 +22,8 @@ bert_config = BertConfig(
 def loss_fcn(x, positive, negative, output):
     bpr_loss = 0
     for i in range(x.shape[0]):
-        pos = output[0][positive[0]]
-        neg = output[0][negative[0]]
+        pos = output[i][positive[i]]
+        neg = output[i][negative[i]]
         x_ij = pos.unsqueeze(-1) - neg
         bpr_loss += -torch.log(torch.sigmoid(x_ij)).sum()
     bpr_loss = bpr_loss / x.shape[0]
@@ -37,10 +38,18 @@ class NDCGMetric(Metric):
         self.add_state("total", default=torch.tensor(0.0), dist_reduce_fx="sum")
 
     def update(self, positive, negative, output):
-        true_relevance = positive[negative]
-        predicted_relevance = torch.sigmoid(output[negative])
-        for i in range(positive.shape[0]):
-            score = ndcg_score(true_relevance[i], predicted_relevance[i], k=self.k)
+        for i in range(len(positive)):
+            all_predictions = torch.logical_or(positive[i], negative[i])
+
+            # True relevance is 1 for games that user bought and 0 for other
+            true_relevance = torch.ones_like(output[i])
+            true_relevance[negative[i]] = 0
+
+            # Remove scores for games used for prediction
+            true_relevance = true_relevance[all_predictions].cpu().numpy()[np.newaxis, ...]
+            predicted_relevance = output[i][all_predictions].cpu().numpy()[np.newaxis, ...]
+
+            score = ndcg_score(true_relevance, predicted_relevance, k=self.k)
             self.scores += torch.tensor(score)
             self.total += torch.tensor(1.0)
 
@@ -81,7 +90,7 @@ class TransformerModel(pl.LightningModule):
         loss = loss_fcn(x, positive, negative, output)
 
         self.log("val/loss", loss.item())
-        # self.ndcg(positive, negative, output)
-        # self.log("val/ndcg", self.ndcg, on_step=True, on_epoch=True)
+        self.ndcg(positive, negative, output)
+        self.log("val/ndcg", self.ndcg, on_step=True, on_epoch=True)
 
         return loss
