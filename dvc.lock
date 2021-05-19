@@ -13,3 +13,42 @@ stages:
     - path: data/sequences.pickle
       md5: 90cb0b7cfd76ceb2732227fe4f5aa1fa
       size: 812893524
+  train_model:
+    cmd: PYTHONPATH=. python cml_scripts/train_model.py
+    deps:
+    - path: cml_scripts/train_model.py
+      md5: 02be8e56f3786a38d77c48ce73dc1408
+      size: 1496
+    - path: data/sequences.pickle
+      md5: 90cb0b7cfd76ceb2732227fe4f5aa1fa
+      size: 812893524
+    params:
+      params.yaml:
+        dataloader.num_workers: 0
+        project_name: Recommendation-With-Transformers
+        train.batch_size: 256
+        train.epochs: 1
+        train.train_size_ratio: 0.9
+    outs:
+    - path: checkpoints/
+      md5: bafa02ff4904e2e3dac7131c9dedb68a.dir
+      size: 107373309
+      nfiles: 1
+  save_model_from_last_checkpoint_as_state_dict:
+    cmd: PYTHONPATH=. python cml_scripts/save_model_from_last_checkpoint_as_state_dict.py
+    deps:
+    - path: checkpoints/
+      md5: bafa02ff4904e2e3dac7131c9dedb68a.dir
+      size: 107373309
+      nfiles: 1
+    params:
+      params.yaml:
+        best_model_save_path: model_state_dicts/bert_model.pth
+        checkpoints_dir: checkpoints/
+        dataloader:
+          num_workers: 0
+        train.epochs: 1
+    outs:
+    - path: model_state_dicts/bert_model.pth
+      md5: b68a322b457bd8090ff663f76b33dd2c
+      size: 35796873
