@@ -140,7 +140,6 @@ export default function GameList({
   const updateSearch = (event) => {
     setSearch(event.target.value);
   };
-  console.log(filteredGames);
 
   return (
     <div className={classes.root} id="main-grid">

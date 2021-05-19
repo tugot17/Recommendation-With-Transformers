@@ -42,7 +42,6 @@ export default function GamesFilter({
   const [age, setAge] = useState([0, 99]);
 
   const handleChange = (event) => {
-    console.log(event.target.name, event.target.checked)
     setState({ ...state, [event.target.name]: event.target.checked });
   };
 
