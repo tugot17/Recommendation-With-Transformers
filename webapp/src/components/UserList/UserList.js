@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(8),
-    justifyContent: "center",
+    justifyContent: "left",
     alignItems: 'top',
     background: theme.palette.background.default,
   },
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
   },
   listContainerNarrow: {
-    width: "25%",
+    width: "30%",
     display: "flex",
     justifyContent: "center",
   },
@@ -42,7 +42,9 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
   },
   avatar: {
-    height: 50,
+    height: 70,
+    width: 50,
+    marginRight: 16
   },
 }));
 
@@ -52,7 +54,7 @@ export default function UserList({ gameData }) {
 
   return (
     <div className={classes.root}>
-      <div className={selectedUser ? classes.listContainerNarrow : classes.listContainer}>
+      <div className={selectedUser || true ? classes.listContainerNarrow : classes.listContainer}>
         <Paper
           className={classes.paper}
           elevation={3}
@@ -81,8 +83,9 @@ export default function UserList({ gameData }) {
                         <ListItemText
                           id={labelId}
                           primary={
-                            (name ? `${name}, ` : ' ') + `User ID: ${userId}`
+                            (name ? `${name}` : 'Unnamed')
                           }
+                          secondary={`User ID: ${userId}`}
                         />
                         <ListItemText
                           primary={

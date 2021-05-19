@@ -71,6 +71,16 @@ npm install
 npm run start
 ```
 
+#### Mock API
+
+Run:
+```
+cd mock-api
+npm install
+npm run start
+```
+
+
 Application should start at `http://localhost:3000/Recommendation-With-Transformers`
 
 ## Continuous machine learning
