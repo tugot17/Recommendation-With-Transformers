@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Popover from "@material-ui/core/Popover";
 import Paper from "@material-ui/core/Paper";
@@ -57,7 +57,7 @@ export default function GamesFilter({
 
   useEffect(() => {
     onChange(state);
-  }, [state]);
+  }, [state, onChange]);
   return (
     <Popover
       id={id}
