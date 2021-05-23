@@ -1,12 +1,10 @@
 import pytorch_lightning as pl
 import torch
-from sklearn.metrics import ndcg_score
 from torch.optim import Adam
-from torchmetrics import Metric
 from transformers import BertConfig, BertModel
-import numpy as np
 
 from app.src import CLS_TOKEN, MASK_TOKEN, MAXLEN, NUM_GAMES, PAD_TOKEN
+from app.src.metrics import NDCGMetric, MAPMetric
 
 HIDDEN_SIZE = 256
 
@@ -30,33 +28,6 @@ def loss_fcn(x, positive, negative, output):
     return bpr_loss
 
 
-class NDCGMetric(Metric):
-    def __init__(self, k=20, dist_sync_on_step=False):
-        super().__init__(dist_sync_on_step=dist_sync_on_step)
-        self.k = k
-        self.add_state("scores", default=torch.tensor(0.0), dist_reduce_fx="sum")
-        self.add_state("total", default=torch.tensor(0.0), dist_reduce_fx="sum")
-
-    def update(self, positive, negative, output):
-        for i in range(len(positive)):
-            all_predictions = torch.logical_or(positive[i], negative[i])
-
-            # True relevance is 1 for games that user bought and 0 for other
-            true_relevance = torch.ones_like(output[i])
-            true_relevance[negative[i]] = 0
-
-            # Remove scores for games used for prediction
-            true_relevance = true_relevance[all_predictions].cpu().numpy()[np.newaxis, ...]
-            predicted_relevance = output[i][all_predictions].cpu().numpy()[np.newaxis, ...]
-
-            score = ndcg_score(true_relevance, predicted_relevance, k=self.k)
-            self.scores += torch.tensor(score)
-            self.total += torch.tensor(1.0)
-
-    def compute(self):
-        return self.scores.float() / self.total
-
-
 class TransformerModel(pl.LightningModule):
     lr = 1e-5
 
@@ -67,6 +38,7 @@ class TransformerModel(pl.LightningModule):
         self.model = BertModel(config)
         self.dense = torch.nn.Linear(HIDDEN_SIZE, NUM_GAMES)
         self.ndcg = NDCGMetric(k=20)
+        self.map = MAPMetric()
 
     def forward(self, x, position_ids=None):
         embedding = self.model(x, position_ids=position_ids).pooler_output
@@ -90,7 +62,10 @@ class TransformerModel(pl.LightningModule):
         loss = loss_fcn(x, positive, negative, output)
 
         self.log("val/loss", loss.item())
+
         self.ndcg(positive, negative, output)
         self.log("val/ndcg", self.ndcg, on_step=True, on_epoch=True)
+        self.map(positive, negative, output)
+        self.log("val/map", self.map, on_step=True, on_epoch=True)
 
         return loss
