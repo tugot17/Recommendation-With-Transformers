@@ -12,7 +12,7 @@ def get_relevance(i, positive, negative, output):
     true_relevance[negative[i]] = 0
 
     # Remove scores for games used for prediction
-    true_relevance = torch.sigmoid(true_relevance[all_predictions]).cpu().numpy()[np.newaxis, ...]
+    true_relevance = true_relevance[all_predictions].cpu().numpy()[np.newaxis, ...]
     predicted_relevance = torch.sigmoid(output[i][all_predictions]).cpu().numpy()[np.newaxis, ...]
 
     return true_relevance, predicted_relevance
@@ -46,10 +46,12 @@ class MAPMetric(Metric):
     def update(self, positive, negative, output):
         for i in range(len(positive)):
             true_relevance, predicted_relevance = get_relevance(i, positive, negative, output)
+            true_relevance, predicted_relevance = true_relevance[0].astype(bool), predicted_relevance[0]
 
             ap = average_precision_score(true_relevance, predicted_relevance)
+            #print(f'True rel shape: {true_relevance.shape}, pred shape: {predicted_relevance.shape}, AP: {ap}')
             self.AP += torch.tensor(ap)
             self.total += torch.tensor(1.0)
 
     def compute(self):
-        return self.ap.float() / self.total
+        return self.AP.float() / self.total
