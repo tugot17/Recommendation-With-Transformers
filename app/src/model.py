@@ -38,7 +38,7 @@ class TransformerModel(pl.LightningModule):
         self.model = BertModel(config)
         self.dense = torch.nn.Linear(HIDDEN_SIZE, NUM_GAMES)
         self.ndcg = NDCGMetric(k=20)
-        self.map = MAPMetric()
+        #self.map = MAPMetric()
 
     def forward(self, x, position_ids=None):
         embedding = self.model(x, position_ids=position_ids).pooler_output
@@ -65,7 +65,7 @@ class TransformerModel(pl.LightningModule):
 
         self.ndcg(positive, negative, output)
         self.log("val/ndcg", self.ndcg, on_step=True, on_epoch=True)
-        self.map(positive, negative, output)
-        self.log("val/map", self.map, on_step=True, on_epoch=True)
+        #self.map(positive, negative, output)
+        #self.log("val/map", self.map, on_step=True, on_epoch=True)
 
         return loss
