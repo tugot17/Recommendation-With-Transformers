@@ -14,11 +14,11 @@ stages:
       md5: 90cb0b7cfd76ceb2732227fe4f5aa1fa
       size: 812893524
   train_model:
-    cmd: PYTHONPATH=. python cml_scripts/train_model.py
+    cmd: python -m cml_scripts.train_model
     deps:
     - path: cml_scripts/train_model.py
-      md5: 02be8e56f3786a38d77c48ce73dc1408
-      size: 1496
+      md5: a8661a6510b3206c01894315d3cd350f
+      size: 1699
     - path: data/sequences.pickle
       md5: 90cb0b7cfd76ceb2732227fe4f5aa1fa
       size: 812893524
@@ -27,12 +27,12 @@ stages:
         dataloader.num_workers: 0
         project_name: Recommendation-With-Transformers
         train.batch_size: 256
-        train.epochs: 1
+        train.epochs: 5
         train.train_size_ratio: 0.9
     outs:
     - path: checkpoints/
-      md5: bafa02ff4904e2e3dac7131c9dedb68a.dir
-      size: 107373309
+      md5: cbb7b6f4cf49f86e4ad718f6ec575b22.dir
+      size: 107372831
       nfiles: 1
   save_model_from_last_checkpoint_as_state_dict:
     cmd: PYTHONPATH=. python cml_scripts/save_model_from_last_checkpoint_as_state_dict.py

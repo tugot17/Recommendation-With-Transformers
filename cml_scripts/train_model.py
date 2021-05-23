@@ -22,7 +22,7 @@ ROOT_DIR = Path(__file__).parent.parent
 DATA_DIR = ROOT_DIR.joinpath("data")
 SEQUENCES_PATH = DATA_DIR.joinpath("sequences.pickle")
 CHECKPOINTS_DIR = Path("checkpoints")
-
+# CHECKPOINTS_DIR = ROOT_DIR.joinpath("checkpoints")
 
 if __name__ == "__main__":
     seed_everything(42)
@@ -46,9 +46,10 @@ if __name__ == "__main__":
         gpus=1,
         deterministic=True,
         accumulate_grad_batches=2,
-        checkpoint_callback=checkpoint_callback,
-        callbacks=[EarlyStopping(monitor="val/loss", patience=5)],
+        # checkpoint_callback=checkpoint_callback,
+        callbacks=[checkpoint_callback, EarlyStopping(monitor="val/loss", patience=5)],
         logger=logger,
+        # resume_from_checkpoint='checkpoints2/epoch=0-step=12920.ckpt'
     )
 
     # Train model

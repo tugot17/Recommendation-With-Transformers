@@ -6,9 +6,9 @@ best_model_save_path: "model_state_dicts/bert_model.pth"
 
 
 dataloader:
-  num_workers: 4
+  num_workers: 0
 
 train:
-  epochs: 1
+  epochs: 5
   batch_size: 256
   train_size_ratio: 0.9
