@@ -46,3 +46,15 @@ stages:
     outs:
       - '${best_model_save_path}'
 
+  validate_baseline_model:
+    cmd: python -m cml_scripts.evaluate_baseline_metrics
+    deps:
+      - cml_scripts/evaluate_baseline_metrics.py
+    params:
+      - project_name
+      - train.train_size_ratio
+      - baseline.n_neighbors
+    metrics:
+      - cml_scripts/baseline_metrics.json:
+          cache: false
+
