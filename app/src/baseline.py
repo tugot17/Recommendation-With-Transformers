@@ -51,8 +51,8 @@ class JaccardModel:
         jaccard_similarity_scores = cdist(binary_games, self._train_set, metric='jaccard').squeeze()
         sorted_indices = np.argsort(jaccard_similarity_scores)
         # exclude perfect match cause they don't give recommendations
-        sorted_indices = sorted_indices[jaccard_similarity_scores[sorted_indices] < 1]
-        closest_sequences_indices = sorted_indices[-self._n_neighbors:]
+        sorted_indices = sorted_indices[jaccard_similarity_scores[sorted_indices] > 0]
+        closest_sequences_indices = sorted_indices[:self._n_neighbors]
         # get recommendations
         recommendations = self._train_set[closest_sequences_indices]
         recommendations = recommendations.sum(dim=0)
