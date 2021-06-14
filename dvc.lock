@@ -52,3 +52,18 @@ stages:
     - path: model_state_dicts/bert_model.pth
       md5: b68a322b457bd8090ff663f76b33dd2c
       size: 35796873
+  validate_baseline_model:
+    cmd: python -m cml_scripts.evaluate_baseline_metrics
+    deps:
+    - path: cml_scripts/evaluate_baseline_metrics.py
+      md5: 7b16e078dd8d7a3d48152ee7e5dbfc0e
+      size: 877
+    params:
+      params.yaml:
+        baseline.n_neighbors: 100
+        project_name: Recommendation-With-Transformers
+        train.train_size_ratio: 0.9
+    outs:
+    - path: cml_scripts/baseline_metrics.json
+      md5: f4c091467df4926643d18c7fc45b84d8
+      size: 97
