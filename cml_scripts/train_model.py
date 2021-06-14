@@ -1,15 +1,3 @@
-# import json
-# from os.path import dirname, join, realpath
-# from pytorch_lightning import Trainer, seed_everything
-
-# METRICS_PATH = join(dirname(realpath(__file__)), "metrics.json")
-
-# my_metric = 0.0
-
-# with open(METRICS_PATH, "w") as outfile:
-#     json.dump({"my_metric": my_metric}, outfile)
-
-
 from pathlib import Path
 
 # from pytorch_lightning.loggers import WandbLogger
@@ -34,13 +22,12 @@ ROOT_DIR = Path(__file__).parent.parent
 DATA_DIR = ROOT_DIR.joinpath("data")
 SEQUENCES_PATH = DATA_DIR.joinpath("sequences.pickle")
 CHECKPOINTS_DIR = Path("checkpoints")
-
+# CHECKPOINTS_DIR = ROOT_DIR.joinpath("checkpoints")
 
 if __name__ == "__main__":
     seed_everything(42)
 
     dm = SteamDataloader(SEQUENCES_PATH, TRAIN_SIZE_RATIO, BATCH_SIZE, NUM_WORKERS)
-    dm.setup()
 
     model = TransformerModel(bert_config)
 
@@ -59,9 +46,11 @@ if __name__ == "__main__":
         gpus=1,
         deterministic=True,
         accumulate_grad_batches=2,
-        checkpoint_callback=checkpoint_callback,
+        # checkpoint_callback=checkpoint_callback,
+        callbacks=[checkpoint_callback, EarlyStopping(monitor="val/loss", patience=5)],
         logger=logger,
+        # resume_from_checkpoint='checkpoints2/epoch=0-step=12920.ckpt'
     )
 
-    # Test model
-    trainer.validate(model, dm.val_dataloader())
+    # Train model
+    trainer.fit(model, dm)

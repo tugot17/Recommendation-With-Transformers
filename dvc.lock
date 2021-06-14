@@ -1,12 +1,69 @@
 schema: '2.0'
 stages:
-  run_predictions:
-    cmd: python cml_scripts/evaluate_metrics.py
+  prepare_dataset:
+    cmd: python cml_scripts/prepare_dataset.py
     deps:
-    - path: cml_scripts/evaluate_metrics.py
-      md5: f660515dd4001292b5b8e94d920030f8
-      size: 230
+    - path: cml_scripts/prepare_dataset.py
+      md5: 9c4238918baa3417ce5bfc7cfd346035
+      size: 498
+    - path: data/data.csv.gz
+      md5: b44d756899b65b1f2423aa038f741e49
+      size: 996189061
     outs:
-    - path: cml_scripts/metrics.json
-      md5: 20c353dd497c21991f9954e572203874
-      size: 18
+    - path: data/sequences.pickle
+      md5: 90cb0b7cfd76ceb2732227fe4f5aa1fa
+      size: 812893524
+  train_model:
+    cmd: python -m cml_scripts.train_model
+    deps:
+    - path: cml_scripts/train_model.py
+      md5: a8661a6510b3206c01894315d3cd350f
+      size: 1699
+    - path: data/sequences.pickle
+      md5: 90cb0b7cfd76ceb2732227fe4f5aa1fa
+      size: 812893524
+    params:
+      params.yaml:
+        dataloader.num_workers: 0
+        project_name: Recommendation-With-Transformers
+        train.batch_size: 256
+        train.epochs: 5
+        train.train_size_ratio: 0.9
+    outs:
+    - path: checkpoints/
+      md5: cbb7b6f4cf49f86e4ad718f6ec575b22.dir
+      size: 107372831
+      nfiles: 1
+  save_model_from_last_checkpoint_as_state_dict:
+    cmd: PYTHONPATH=. python cml_scripts/save_model_from_last_checkpoint_as_state_dict.py
+    deps:
+    - path: checkpoints/
+      md5: bafa02ff4904e2e3dac7131c9dedb68a.dir
+      size: 107373309
+      nfiles: 1
+    params:
+      params.yaml:
+        best_model_save_path: model_state_dicts/bert_model.pth
+        checkpoints_dir: checkpoints/
+        dataloader:
+          num_workers: 0
+        train.epochs: 1
+    outs:
+    - path: model_state_dicts/bert_model.pth
+      md5: b68a322b457bd8090ff663f76b33dd2c
+      size: 35796873
+  validate_baseline_model:
+    cmd: python -m cml_scripts.evaluate_baseline_metrics
+    deps:
+    - path: cml_scripts/evaluate_baseline_metrics.py
+      md5: 7b16e078dd8d7a3d48152ee7e5dbfc0e
+      size: 877
+    params:
+      params.yaml:
+        baseline.n_neighbors: 100
+        project_name: Recommendation-With-Transformers
+        train.train_size_ratio: 0.9
+    outs:
+    - path: cml_scripts/baseline_metrics.json
+      md5: f4c091467df4926643d18c7fc45b84d8
+      size: 97
