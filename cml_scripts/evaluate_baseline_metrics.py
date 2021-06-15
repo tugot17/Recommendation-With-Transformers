@@ -20,9 +20,9 @@ RESULTS_PATH = CML_DIR.joinpath("baseline_metrics.json")
 if __name__ == "__main__":
     baseline = JaccardModel(SEQUENCES_PATH, TRAIN_SIZE_RATIO, N_NEIGHBORS)
     start = time()
-    ndcg, mAP = baseline.validate()
+    ndcg, mAP, n = baseline.validate()
     end = time()
-    validation_time = end - start
+    validation_time = (end - start) / n
     results = {'time': validation_time, 'mAP': mAP, 'NDCG': ndcg}
     with open(RESULTS_PATH, "w") as fd:
         json.dump(results, fd, indent=4)

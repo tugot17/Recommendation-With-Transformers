@@ -43,7 +43,7 @@ class JaccardModel:
             map = self.map(positive, negative, recommendations)
         total_ndcg = self.ndcg.compute()
         total_mAP = self.map.compute()
-        return total_ndcg.item(), total_mAP.item()
+        return total_ndcg.item(), total_mAP.item(), n
 
     def predict(self, sequence):
         binary_games = torch.zeros((1, NUM_GAMES), dtype=torch.bool)
