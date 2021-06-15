@@ -1,17 +1,13 @@
+from pathlib import Path
 from typing import List
 
 import pandas as pd
-from pathlib import Path
+import torch
 import uvicorn
 from fastapi import FastAPI
+from model import CLS_TOKEN, TransformerModel, bert_config
 from starlette.middleware.cors import CORSMiddleware
 
-from model import TransformerModel, bert_config, CLS_TOKEN
-import torch
-
-import os
-
-os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
 
 NUMBER_OF_RECOMMENDATIONS = 10
 
@@ -28,13 +24,7 @@ model.eval()
 
 def create_app():
     app = FastAPI()
-    # origins = [
-    #     "http://localhost:3001",
-    #     "https://tugot17.github.io/Recommendation-With-Transformers/",
-    # ]
-
     origins = ["*"]
-
     app.add_middleware(
         CORSMiddleware,
         allow_origins=origins,
@@ -42,9 +32,7 @@ def create_app():
         allow_methods=["*"],
         allow_headers=["*"],
     )
-
     return app
-
 
 app = create_app()
 
@@ -75,11 +63,11 @@ def main(app_ids: List[int]) -> List[int]:
         .flatten()
         .tolist()
     )
-    best_games_for_user = list(
+    best_apps_for_user = list(
         map(lambda game_id: str(game_to_app_dict[game_id]), best_games_for_user)
     )
 
-    return best_games_for_user
+    return best_apps_for_user
 
 
 if __name__ == "__main__":

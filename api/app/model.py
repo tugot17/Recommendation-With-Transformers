@@ -2,7 +2,6 @@ import pytorch_lightning as pl
 import torch
 from transformers import BertConfig, BertModel
 
-
 NUM_GAMES = 2691
 PAD_TOKEN = NUM_GAMES
 MASK_TOKEN = NUM_GAMES + 1
