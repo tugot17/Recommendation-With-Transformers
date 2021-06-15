@@ -32,8 +32,8 @@ class JaccardModel:
         val_sequences = sequences[train_size:]
         return train, val_sequences
 
-    def validate(self):
-        n = len(self._val_set)
+    def validate(self, data_part=1.0):
+        n = int(len(self._val_set) * data_part)
         for i in tqdm.tqdm(range(n)):
             data, positive, negative = self._val_set[i]
             data = data[1:]  # drop the CLS token
@@ -43,7 +43,7 @@ class JaccardModel:
             map = self.map(positive, negative, recommendations)
         total_ndcg = self.ndcg.compute()
         total_mAP = self.map.compute()
-        return total_ndcg.item(), total_mAP.item()
+        return total_ndcg.item(), total_mAP.item(), n
 
     def predict(self, sequence):
         binary_games = torch.zeros((1, NUM_GAMES), dtype=torch.bool)
