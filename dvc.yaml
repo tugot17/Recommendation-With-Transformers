@@ -8,17 +8,53 @@ stages:
       - data/sequences.pickle
 
   train_model:
-    cmd: python cml_scripts/train_model.py
+    cmd: python -m cml_scripts.train_model
     deps:
-      - app/src/
+      - cml_scripts/train_model.py
       - data/sequences.pickle
+    params:
+      - project_name
+      - dataloader.num_workers
+      - train.epochs
+      - train.batch_size
+      - train.train_size_ratio
     outs:
-      - model_checkpoints/
+      - checkpoints/
 
-  run_predictions:
-    cmd: python cml_scripts/evaluate_metrics.py
+  validate_model:
+    cmd: python -m cml_scripts.evaluate_metrics
     deps:
-    - cml_scripts/evaluate_metrics.py
+      - cml_scripts/evaluate_metrics.py
+    params:
+      - project_name
+      - dataloader.num_workers
+      - train.epochs
+      - train.batch_size
+      - train.train_size_ratio
+
+  save_model_from_last_checkpoint_as_state_dict:
+    cmd: >-
+      python -m 
+      cml_scripts.save_model_from_last_checkpoint_as_state_dict
+    deps:
+      - '${checkpoints_dir}'
+    params:
+      - checkpoints_dir
+      - best_model_save_path
+      - dataloader
+      - train.epochs
+    outs:
+      - '${best_model_save_path}'
+
+  validate_baseline_model:
+    cmd: python -m cml_scripts.evaluate_baseline_metrics
+    deps:
+      - cml_scripts/evaluate_baseline_metrics.py
+    params:
+      - project_name
+      - train.train_size_ratio
+      - baseline.n_neighbors
     metrics:
-    - cml_scripts/metrics.json:
-        cache: false
+      - cml_scripts/baseline_metrics.json:
+          cache: false
+
