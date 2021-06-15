@@ -53,11 +53,14 @@ app = create_app()
 
 
 @app.post("/")
-def main(app_ids: List[int] = Query([])) -> List[int]:
+def main(app_ids: List[int]) -> List[int]:
     """
     Json in: [1, 2, 3]
     Json out: [5, 6, 7]
     """
+    print(f"Games: {app_ids}")
+    app_ids = list(filter(lambda app_id: app_id in app_to_game_dict.keys(), app_ids))
+    print(f"Games after filtration of those not in database: {app_ids}")
 
     oiginal_game_ids = list(map(lambda app_id: app_to_game_dict[app_id], app_ids))
     game_ids = [CLS_TOKEN] + oiginal_game_ids
