@@ -1,8 +1,17 @@
 # FastAPI-Model-Deployement
-
-Run `docker-compose up` on remote machine
+Just run server using python
 
 ```bash
-docker-compose up
+pip install -r requirements.txt
+
+cd app/
+
+python main.py
+```
+
+or run  with `docker-compose up` on remote machine
+
+```bash
+docker-compose up --build
 ```
 
