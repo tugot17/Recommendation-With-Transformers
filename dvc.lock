@@ -65,5 +65,22 @@ stages:
         train.train_size_ratio: 0.9
     outs:
     - path: cml_scripts/baseline_metrics.json
-      md5: 62a67939d03a553e1dc86e53077de5e0
-      size: 95
+      md5: f4c091467df4926643d18c7fc45b84d8
+      size: 97
+  validate_model:
+    cmd: python -m cml_scripts.evaluate_metrics
+    deps:
+    - path: cml_scripts/evaluate_metrics.py
+      md5: d86fb7c794fbe753e250209cbb72bcfe
+      size: 1857
+    params:
+      params.yaml:
+        dataloader.num_workers: 0
+        project_name: Recommendation-With-Transformers
+        train.batch_size: 256
+        train.epochs: 5
+        train.train_size_ratio: 0.9
+    outs:
+    - path: cml_scripts/transformer_metrics.json
+      md5: 50718d0a9a3446693b792ad8120bb978
+      size: 102

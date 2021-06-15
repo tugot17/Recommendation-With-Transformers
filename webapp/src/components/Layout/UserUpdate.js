@@ -1,13 +1,13 @@
-import {useContext, useEffect} from "react";
-import {store} from "../../hooks/store";
+import { useContext, useEffect } from "react";
+import { store } from "../../hooks/store";
 
-export default function UserUpdate({runMutation}) {
+export default function UserUpdate({ runMutation, user = null }) {
   const { state } = useContext(store);
 
   useEffect(() => {
     runMutation({
-      ...state.user
-    })
-  }, [state.user, runMutation])
-  return ''
+      ...(user != null ? user : state.user),
+    });
+  }, [state.user, user, runMutation]);
+  return "";
 }

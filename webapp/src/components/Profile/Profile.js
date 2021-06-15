@@ -194,6 +194,18 @@ export default function Profile({ gameData }) {
         elPerRow={8}
         gameData={gameData.filter((el) => state.user.games.includes(el.appid))}
       />
+      {
+        state.user.recommendations && <Typography component="h1" variant="h6" align="center">
+          Recommendations
+        </Typography>
+      }
+      {
+        state.user.recommendations && <GameList
+          fixedHeight={false}
+          elPerRow={8}
+          gameData={gameData.filter((el) => state.user.recommendations.includes(el.appid))}
+        />
+      }
     </Paper>
   );
 }
