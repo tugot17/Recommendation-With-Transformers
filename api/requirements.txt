@@ -1,3 +1,4 @@
 transformers==4.6.0
 pandas
+torch
 fastapi[all]

@@ -3,8 +3,9 @@ from typing import List
 import pandas as pd
 from pathlib import Path
 import uvicorn
-from fastapi import FastAPI, Query
+from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
+
 from model import TransformerModel, bert_config, CLS_TOKEN
 import torch
 
@@ -15,11 +16,7 @@ os.environ["KMP_DUPLICATE_LIB_OK"] = "True"
 NUMBER_OF_RECOMMENDATIONS = 10
 
 df = pd.read_csv(Path(__file__).parent.joinpath("appids.csv"))
-TRANSFORMER_MODEL_PATH = (
-    Path(__file__)
-    .parent.parent.parent.joinpath("model_state_dicts")
-    .joinpath("bert_model.pth")
-)
+TRANSFORMER_MODEL_PATH = Path(__file__).parent.joinpath("bert_model.pth")
 
 app_to_game_dict = dict(zip(df.appid, df.gameid))
 game_to_app_dict = dict(zip(df.gameid, df.appid))
@@ -79,7 +76,7 @@ def main(app_ids: List[int]) -> List[int]:
         .tolist()
     )
     best_games_for_user = list(
-        map(lambda game_id: game_to_app_dict[game_id], best_games_for_user)
+        map(lambda game_id: str(game_to_app_dict[game_id]), best_games_for_user)
     )
 
     return best_games_for_user
