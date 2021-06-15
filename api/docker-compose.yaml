@@ -3,4 +3,4 @@ services:
   model_api:
     build: .
     ports:
-      - "8011:80"
+      - "3001:3001"
