@@ -2,7 +2,7 @@
 
 # Transformers for recommendation systems
 
-DESCRIPTION
+### [Online Application](https://tugot17.github.io/Recommendation-With-Transformers/)
 
 ## TL;DR
 
@@ -59,6 +59,29 @@ and install [requirements.txt](app/requirements.txt)
 pip install -r app/requirements.txt
 ```
 
+## Web App
+
+#### Requirements:
+- [Node 14.x](https://nodejs.org/en/)
+
+Run:
+```
+cd webapp
+npm install
+npm run start
+```
+
+#### Mock API
+
+Run:
+```
+cd mock-api
+npm install
+npm run start
+```
+
+
+Application should start at `http://localhost:3000/Recommendation-With-Transformers`
 
 ## Continuous machine learning
 

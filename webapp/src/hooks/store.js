@@ -12,6 +12,7 @@ const ACTIONS = {
   ADD_USER_GAME: "ADD_USER_GAME",
   REMOVE_USER_GAME: "REMOVE_USER_GAME",
   SET_USER: "UPDATE_USER",
+  SET_RECOMMENDATIONS: "UPDATE_RECOMMENDATIONS",
 };
 
 function uuidv4() {
@@ -44,6 +45,13 @@ const StateProvider = ({ children }) => {
           return { ...state, menu: action.value, user };
         case ACTIONS.SET_USER:
           newUser = { ...state.user, ...action.value };
+          setUser(newUser);
+          return { ...state, user: newUser };
+        case ACTIONS.SET_RECOMMENDATIONS:
+          newUser = {
+            ...state.user,
+            recommendations: [...action.value],
+          };
           setUser(newUser);
           return { ...state, user: newUser };
         case ACTIONS.ADD_USER_GAME:

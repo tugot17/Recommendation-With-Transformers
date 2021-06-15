@@ -6,8 +6,9 @@ const ACTIONS = {
   FETCH_ERROR: 'FETCH_ERROR'
 }
 
-const useFetch = (url) => {
+const useFetch = (url, postData) => {
   const cache = useRef({});
+  const stringPostData = JSON.stringify(postData);
 
   const initialState = {
     status: 'idle',
@@ -34,19 +35,19 @@ const useFetch = (url) => {
 
     const fetchData = async () => {
       dispatch({ type: ACTIONS.FETCHING });
-      if (cache.current[url]) {
-        const data = cache.current[url];
+      if (cache.current[JSON.stringify(postData)]) {
+        const data = cache.current[url+JSON.stringify(postData)];
         dispatch({ type: ACTIONS.FETCHED, payload: data });
       } else {
         try {
           const response = await fetch(url, {
+            method: 'POST', // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin
             headers: {
               'Content-Type': 'application/json',
-              'Access-Control-Allow-Origin': '*',
-              'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
               // 'Content-Type': 'application/x-www-form-urlencoded',
             },
+            body: JSON.stringify(postData)
           });
           const data = await response.json();
           cache.current[url] = data;
@@ -64,7 +65,7 @@ const useFetch = (url) => {
     return function cleanup() {
       cancelRequest = true;
     };
-  }, [url]);
+  }, [url, stringPostData, postData]);
 
   return state;
 };
