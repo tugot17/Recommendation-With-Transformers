@@ -5,7 +5,7 @@ import pandas as pd
 import torch
 import uvicorn
 from fastapi import FastAPI
-from model import CLS_TOKEN, TransformerModel, bert_config
+from app.model import CLS_TOKEN, TransformerModel, bert_config
 from starlette.middleware.cors import CORSMiddleware
 
 
