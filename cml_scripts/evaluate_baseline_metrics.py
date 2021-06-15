@@ -10,6 +10,7 @@ with open("params.yaml", "r") as fd:
 
 TRAIN_SIZE_RATIO = params["train"]["train_size_ratio"]
 N_NEIGHBORS = params["baseline"]["n_neighbors"]
+DATA_PART = params["baseline"]["data_part"]
 
 ROOT_DIR = Path(__file__).parent.parent
 DATA_DIR = ROOT_DIR.joinpath("data")
@@ -20,7 +21,7 @@ RESULTS_PATH = CML_DIR.joinpath("baseline_metrics.json")
 if __name__ == "__main__":
     baseline = JaccardModel(SEQUENCES_PATH, TRAIN_SIZE_RATIO, N_NEIGHBORS)
     start = time()
-    ndcg, mAP, n = baseline.validate()
+    ndcg, mAP, n = baseline.validate(DATA_PART)
     end = time()
     validation_time = (end - start) / n
     results = {'time': validation_time, 'mAP': mAP, 'NDCG': ndcg}

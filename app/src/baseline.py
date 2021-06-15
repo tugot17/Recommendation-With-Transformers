@@ -32,8 +32,8 @@ class JaccardModel:
         val_sequences = sequences[train_size:]
         return train, val_sequences
 
-    def validate(self):
-        n = len(self._val_set)
+    def validate(self, data_part=1.0):
+        n = int(len(self._val_set) * data_part)
         for i in tqdm.tqdm(range(n)):
             data, positive, negative = self._val_set[i]
             data = data[1:]  # drop the CLS token

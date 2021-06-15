@@ -56,8 +56,8 @@ stages:
     cmd: python -m cml_scripts.evaluate_baseline_metrics
     deps:
     - path: cml_scripts/evaluate_baseline_metrics.py
-      md5: 6df1a55b37eb56bede8c35055f86f8c9
-      size: 886
+      md5: 28032becee9d8138dc5540db78f2aaf5
+      size: 939
     params:
       params.yaml:
         baseline.n_neighbors: 100
@@ -65,8 +65,8 @@ stages:
         train.train_size_ratio: 0.9
     outs:
     - path: cml_scripts/baseline_metrics.json
-      md5: f4c091467df4926643d18c7fc45b84d8
-      size: 97
+      md5: c9c05ddd72f9e7cce2c4aaa93c0fea1b
+      size: 96
   validate_model:
     cmd: python -m cml_scripts.evaluate_metrics
     deps:
