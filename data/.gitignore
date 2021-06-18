@@ -4,3 +4,5 @@
 /appids.csv
 /steamids.csv
 /sequences.pickle
+/train_data.csv
+/val_data.csv
