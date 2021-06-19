@@ -84,3 +84,27 @@ stages:
     - path: cml_scripts/transformer_metrics.json
       md5: 50718d0a9a3446693b792ad8120bb978
       size: 102
+  train_neighbours_model:
+    cmd: python -m cml_scripts.train_neighbours_model
+    deps:
+    - path: cml_scripts/train_neighbours_model.py
+      md5: 6c4753afcbb48845a1595c0396871472
+      size: 1495
+    - path: data/train_data.pickle
+      md5: c43a7a486ab37f0b5282d69d9fe6c15c
+      size: 628254102
+    - path: data/val_data.pickle
+      md5: 78b31171fcf7f6f0673f6b8344e4fb85
+      size: 75216526
+    params:
+      params.yaml:
+        dataloader.num_workers: 0
+        neighbours_checkpoints_dir: checkpoints_neighbours/
+        project_name: Recommendation-With-Transformers
+        train_neighbours.batch_size: 512
+        train_neighbours.epochs: 10
+    outs:
+    - path: checkpoints_neighbours/
+      md5: faf123c8900825a1c102286ce719d203.dir
+      size: 16569527
+      nfiles: 1

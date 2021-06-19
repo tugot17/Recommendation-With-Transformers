@@ -18,8 +18,13 @@ class SteamNeighbourDataset(Dataset):
         to_predict = self.df["to predict"][idx]
         to_predict = list(
             map(lambda s: int(s), to_predict.replace("[", "").replace("]", "").replace(",", "").split(" ")))
+    
 
-        user_and_neighbours_embedding = torch.cat((user_embedding, neighbours_embedding), dim=0)
+        try:
+            user_and_neighbours_embedding = torch.cat((user_embedding, neighbours_embedding), dim=0)
+        except:
+            user_and_neighbours_embedding = torch.cat((user_embedding, user_embedding), dim=0)
+           #print(f"User: {user_embedding.size()}, Neighbours: {neighbours_embedding}")
 
         positive = torch.zeros(NUM_GAMES, dtype=torch.bool)
         negative = torch.ones(NUM_GAMES, dtype=torch.bool)

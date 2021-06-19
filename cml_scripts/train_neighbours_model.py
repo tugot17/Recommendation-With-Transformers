@@ -27,6 +27,9 @@ if __name__ == "__main__":
     seed_everything(42)
 
     dm = SteamNeighboursDatamodule(TRAIN_DF_PATH, VAL_DF_PATH, BATCH_SIZE, NUM_WORKERS)
+    
+    print(len(dm.val_df))
+
 
     model = NeighboursrModel()
 
