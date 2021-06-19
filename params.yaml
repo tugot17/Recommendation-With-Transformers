@@ -4,7 +4,6 @@ checkpoints_dir: "checkpoints/"
 
 best_model_save_path: "model_state_dicts/bert_model.pth"
 
-
 dataloader:
   num_workers: 0
 
@@ -16,3 +15,9 @@ train:
 baseline:
   n_neighbors: 100
   data_part: 0.0001
+
+
+neighbours_checkpoints_dir: "checkpoints_neighbours/"
+train_neighbours:
+  epochs: 10
+  batch_size: 512

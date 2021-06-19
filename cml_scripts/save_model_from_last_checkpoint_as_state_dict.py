@@ -26,7 +26,7 @@ def save_model_from_last_checkpoint_as_state_dict(checkpoints_dir: Path) -> None
 
     lightning_model = TransformerModel(bert_config)
 
-    lightning_model.load_from_checkpoint(latest_checkpoint_path)
+    lightning_model = lightning_model.load_from_checkpoint(latest_checkpoint_path)
     lightning_model.eval()
     lightning_model = lightning_model.cpu()
 

@@ -5,7 +5,7 @@ import pandas as pd
 import torch
 import uvicorn
 from fastapi import FastAPI
-from app.model import CLS_TOKEN, TransformerModel, bert_config
+from model import CLS_TOKEN, TransformerModel, bert_config
 from starlette.middleware.cors import CORSMiddleware
 
 
@@ -18,7 +18,8 @@ app_to_game_dict = dict(zip(df.appid, df.gameid))
 game_to_app_dict = dict(zip(df.gameid, df.appid))
 
 model = TransformerModel(bert_config)
-model.load_state_dict(torch.load(TRANSFORMER_MODEL_PATH))
+# model.load_state_dict(torch.load(TRANSFORMER_MODEL_PATH))
+model = model.load_from_checkpoint('epoch=4-step=64604.ckpt')
 model.eval()
 
 
