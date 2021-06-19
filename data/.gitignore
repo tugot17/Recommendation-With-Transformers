@@ -6,3 +6,5 @@
 /sequences.pickle
 /train_data.csv
 /val_data.csv
+/train_data.pickle
+/val_data.pickle
