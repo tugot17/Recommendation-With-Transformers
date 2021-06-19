@@ -29,6 +29,7 @@ if __name__ == "__main__":
     seed_everything(42)
 
     dm = SteamNeighboursDatamodule(TRAIN_DF_PATH, VAL_DF_PATH, BATCH_SIZE, NUM_WORKERS)
+    dm.setup()
 
     model = NeighboursrModel().load_from_checkpoint(CHECKPOINT_PATH)
     # model.load_from_checkpoint('checkpoints/epoch=4-step=64604.ckpt')
