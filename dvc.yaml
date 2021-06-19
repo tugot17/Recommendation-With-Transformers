@@ -64,6 +64,19 @@ stages:
     outs:
       - '${neighbours_checkpoints_dir}'
 
+  validate_neighbours_model:
+    cmd: python -m cml_scripts.evaluate_neighbours_model_metrics
+    deps:
+      - cml_scripts/evaluate_neighbours_model_metrics.py
+    params:
+      - project_name
+      - dataloader.num_workers
+      - train_neighbours
+      - neighbours_checkpoints_dir
+    metrics:
+      - cml_scripts/neighbours_metrics.json:
+          cache: false
+
 ##  commended due to the long (1h) computation time
 #  validate_baseline_model:
 #    cmd: python -m cml_scripts.evaluate_baseline_metrics
