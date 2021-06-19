@@ -49,7 +49,8 @@ if __name__ == "__main__":
         deterministic=True,
         accumulate_grad_batches=2,
         callbacks=[checkpoint_callback, EarlyStopping(monitor="val/loss", patience=5)],
-        logger=logger,
+        resume_from_checkpoint=Path("checkpoints_neighbours/epoch=9-step=2509.ckpt"),
+        logger=logger
     )
 
     # Train model

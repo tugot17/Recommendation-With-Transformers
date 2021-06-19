@@ -19,5 +19,5 @@ baseline:
 
 neighbours_checkpoints_dir: "checkpoints_neighbours/"
 train_neighbours:
-  epochs: 10
+  epochs: 100
   batch_size: 512
