@@ -17,7 +17,7 @@ class NeighboursrModel(pl.LightningModule):
         to which he/she is connected in the steam database. Based on that the final pred is made.
         """
         super().__init__()
-        self.save_hyperparameters()
+#        self.save_hyperparameters()
 
         self.dense = torch.nn.Linear(HIDDEN_SIZE*2, NUM_GAMES)
         self.ndcg = NDCGMetric(k=20)

@@ -1,9 +1,9 @@
-import pickle
+import pickle5 as pickle
 
 from pytorch_lightning import LightningDataModule
 from torch.utils.data import DataLoader
 
-from app.src.dataset import SteamDataset
+from app.src.neighbours_dataset import SteamNeighbourDataset
 from pathlib import Path
 
 
@@ -22,8 +22,8 @@ class SteamNeighboursDatamodule(LightningDataModule):
             self.val_df = pickle.load(f)
 
     def setup(self, stage=None):
-        self.train_set = SteamDataset(self.train_df)
-        self.val_set = SteamDataset(self.val_df)
+        self.train_set = SteamNeighbourDataset(self.train_df)
+        self.val_set = SteamNeighbourDataset(self.val_df)
 
     def train_dataloader(self):
         return DataLoader(

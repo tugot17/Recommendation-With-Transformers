@@ -46,21 +46,20 @@ stages:
     outs:
       - '${best_model_save_path}'
 
-#  train_neighbours_model:
-#    cmd: python -m cml_scripts.train_neighbours_model
-#    deps:
-#      - cml_scripts/train_neighbours_model.py
-#      - data/train_data.pickle
-#      - data/VALdata.pickle
-#    params:
-#      - project_name
-#      - dataloader.num_workers
-#      - train_neighbours.epochs
-#      - train_neighbours.batch_size
-#      - train_neighbours.train_size_ratio
-#      - neighbours_checkpoints_dir
-#    outs:
-#      - '${neighbours_checkpoints_dir}'
+  train_neighbours_model:
+    cmd: python -m cml_scripts.train_neighbours_model
+    deps:
+      - cml_scripts/train_neighbours_model.py
+      - data/train_data.pickle
+      - data/val_data.pickle
+    params:
+      - project_name
+      - dataloader.num_workers
+      - train_neighbours.epochs
+      - train_neighbours.batch_size
+      - neighbours_checkpoints_dir
+    outs:
+      - '${neighbours_checkpoints_dir}'
 
 ##  commended due to the long (1h) computation time
 #  validate_baseline_model:
