@@ -31,6 +31,9 @@ stages:
       - train.epochs
       - train.batch_size
       - train.train_size_ratio
+    metrics:
+      - cml_scripts/transformer_metrics.json:
+          cache: false
 
   save_model_from_last_checkpoint_as_state_dict:
     cmd: >-
