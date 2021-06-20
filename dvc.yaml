@@ -35,20 +35,6 @@ stages:
       - cml_scripts/transformer_metrics.json:
           cache: false
 
-  save_model_from_last_checkpoint_as_state_dict:
-    cmd: >-
-      python -m 
-      cml_scripts.save_model_from_last_checkpoint_as_state_dict
-    deps:
-      - '${checkpoints_dir}'
-    params:
-      - checkpoints_dir
-      - best_model_save_path
-      - dataloader
-      - train.epochs
-    outs:
-      - '${best_model_save_path}'
-
   train_neighbours_model:
     cmd: python -m cml_scripts.train_neighbours_model
     deps:
