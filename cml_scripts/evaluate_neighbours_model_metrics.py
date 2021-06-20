@@ -22,7 +22,7 @@ TRAIN_DF_PATH = DATA_DIR.joinpath("train_data.pickle")
 VAL_DF_PATH = DATA_DIR.joinpath("val_data.pickle")
 CML_DIR = ROOT_DIR.joinpath("cml_scripts")
 
-CHECKPOINT_PATH = Path("checkpoints_neighbours/epoch=9-step=2509.ckpt")
+CHECKPOINT_PATH = Path("checkpoints_neighbours/epoch=99-step=25099.ckpt")
 RESULTS_PATH = CML_DIR.joinpath("neighbours_metrics.json")
 
 if __name__ == "__main__":
