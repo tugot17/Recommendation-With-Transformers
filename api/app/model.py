@@ -1,5 +1,6 @@
 import torch
 from transformers import BertConfig, BertModel
+import pytorch_lightning as pl
 
 NUM_GAMES = 2691
 PAD_TOKEN = NUM_GAMES
@@ -17,9 +18,10 @@ bert_config = BertConfig(
 )
 
 
-class TransformerModel(torch.nn.Module):
+class TransformerModel(pl.LightningModule):
     def __init__(self, config):
         super().__init__()
+        self.save_hyperparameters()
         self.model = BertModel(config)
         self.dense = torch.nn.Linear(HIDDEN_SIZE, NUM_GAMES)
 

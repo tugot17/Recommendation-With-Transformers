@@ -8,6 +8,7 @@ torch==1.8.1
 pytorch_lightning==1.3.1
 transformers==4.6.0
 torchmetrics==0.3.2
+pickle5==0.0.11
 
 # DVC
 dvc[gdrive]==2.0.18

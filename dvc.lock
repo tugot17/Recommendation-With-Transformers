@@ -84,3 +84,45 @@ stages:
     - path: cml_scripts/transformer_metrics.json
       md5: 50718d0a9a3446693b792ad8120bb978
       size: 102
+  train_neighbours_model:
+    cmd: python -m cml_scripts.train_neighbours_model
+    deps:
+    - path: cml_scripts/train_neighbours_model.py
+      md5: a7dab5d732c9a7e8f07b5139415efd41
+      size: 1582
+    - path: data/train_data.pickle
+      md5: c43a7a486ab37f0b5282d69d9fe6c15c
+      size: 628254102
+    - path: data/val_data.pickle
+      md5: 78b31171fcf7f6f0673f6b8344e4fb85
+      size: 75216526
+    params:
+      params.yaml:
+        dataloader.num_workers: 0
+        neighbours_checkpoints_dir: checkpoints_neighbours/
+        project_name: Recommendation-With-Transformers
+        train_neighbours.batch_size: 512
+        train_neighbours.epochs: 100
+    outs:
+    - path: checkpoints_neighbours/
+      md5: d80a84315035cafed62daa2493f267b5.dir
+      size: 16569527
+      nfiles: 1
+  validate_neighbours_model:
+    cmd: python -m cml_scripts.evaluate_neighbours_model_metrics
+    deps:
+    - path: cml_scripts/evaluate_neighbours_model_metrics.py
+      md5: cde704b7b49b4440aab3d39dc71830a0
+      size: 1646
+    params:
+      params.yaml:
+        dataloader.num_workers: 0
+        neighbours_checkpoints_dir: checkpoints_neighbours/
+        project_name: Recommendation-With-Transformers
+        train_neighbours:
+          epochs: 100
+          batch_size: 512
+    outs:
+    - path: cml_scripts/neighbours_metrics.json
+      md5: 8f53fb547be7446caf11dae69dfc8e05
+      size: 100

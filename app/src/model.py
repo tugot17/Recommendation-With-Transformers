@@ -17,14 +17,14 @@ bert_config = BertConfig(
 )
 
 
-def loss_fcn(x, positive, negative, output):
+def loss_fcn(batch_size, positive, negative, output):
     bpr_loss = 0
-    for i in range(x.shape[0]):
+    for i in range(batch_size):
         pos = output[i][positive[i]]
         neg = output[i][negative[i]]
         x_ij = pos.unsqueeze(-1) - neg
         bpr_loss += -torch.log(torch.sigmoid(x_ij)).sum()
-    bpr_loss = bpr_loss / x.shape[0]
+    bpr_loss = bpr_loss / batch_size
     return bpr_loss
 
 
@@ -51,7 +51,7 @@ class TransformerModel(pl.LightningModule):
     def training_step(self, batch, batch_idx):
         x, positive, negative = batch
         output = self.forward(x, position_ids=torch.zeros_like(x))
-        loss = loss_fcn(x, positive, negative, output)
+        loss = loss_fcn(x.shape[0], positive, negative, output)
 
         self.log("train/loss", loss.item())
         return loss
@@ -59,7 +59,7 @@ class TransformerModel(pl.LightningModule):
     def validation_step(self, batch, batch_idx):
         x, positive, negative = batch
         output = self.forward(x, position_ids=torch.zeros_like(x))
-        loss = loss_fcn(x, positive, negative, output)
+        loss = loss_fcn(x.shape[0], positive, negative, output)
 
         self.log("val/loss", loss.item())
 
